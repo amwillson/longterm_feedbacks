@@ -1,0 +1,303 @@
+
+  
+    
+      uid=PALEON,o=LTER,dc=ecoinformatics,dc=org
+      all
+    
+    
+      public
+      read
+    
+  
+  
+    2k-yr-ForestComp_UpperMidwest_Level2_v1.0
+    doi:10.6073/pasta/338e778c00b13acd278302e82f992415STEPPS 2000 Year Forest Composition Estimates, Upper Midwest US, Level 2
+
+    
+      Dr. Andria Dawson
+      Mount Royal University
+    
+    
+      Dr. Simon Goring
+      University of Wisconsin, Madison
+    
+    
+      Dr. Christopher J. Paciorek
+      University of California, Berkeley
+    
+    
+      Dr. Stephen T. Jackson
+      Southwest Climate Science Center and University of Arizona
+    
+    
+      Dr. Jason S. McLachlan
+      University of Notre Dame
+    
+    
+      Dr. John W. Williams
+      University of Wisconsin, Madison
+    
+    
+      McLachlan Lab
+      			Notre Dame Biology Department
+			Bio Dept address
+			Notre Dame, IN 46615  USA
+      jmclachl@nd.edu
+      https://sites.nd.edu/paleonproject/
+    
+    2020-12-03
+    english
+    
+      
+                Forest ecosystems in eastern North America have been in flux for the last several thousand years, well before Euro-American land clearance and the 20th-century onset of anthropogenic climate change.  However, the magnitude and uncertainty of prehistoric vegetation change have been difficult to quantify because of the multiple ecological, dispersal, and sedimentary processes that govern the relationship between forest composition and fossil pollen assemblages.  Here we extend STEPPS, a Bayesian hierarchical spatio-temporal pollen-vegetation model, to estimate changes in forest composition in the upper Midwestern United States from about 2,100 to 300 years ago. Using this approach, we find evidence for large changes in the relative abundance of some species, and significant changes in community composition. However, these changes took place against a regional background of changes that were small in magnitude or not statistically significant, suggesting complexity in the spatio-temporal patterns of forest dynamics. The single largest change is the infilling of Tsuga canadensis in northern Wisconsin over the past 2000 years.  Despite range in-filling, the range limit of T. canadensis was largely stable, with modest expansion westward. The regional ecotone between temperate hardwood forests and northern mixed hardwood/conifer forests shifted southwestward by 15-20 km in Minnesota and northwestern Wisconsin.  Fraxinus, Ulmus, and other mesic hardwoods expanded in the Big Woods region of southern Minnesota. The increasing density of paleoecological data networks and advances in statistical modeling approaches now enables the confident detection of subtle but significant changes in forest composition over the last 2,000 years.This material is based upon 
+				work supported by the National Science Foundation under grants #DEB-1241874, 1241868, 1241870, 1241851, 1241891, 1241846, 1241856, 1241930.
+            
+    
+    
+      biogeography
+      community composition
+      community patterns
+      maps
+      plant species
+      spatial variability
+      species composition
+      tree maps
+      trees
+      LTER controlled vocabulary
+    
+    
+      We are using the CC-BY 4.0 (Creative Commons Attribution 4.0 International) License. Details of this license can be found here: http://creativecommons.org/licenses/by/4.0/legalcode
+    
+    
+      
+         
+                    Uppwer Midwestern United States. Specifically Minnesota, Wisconsin and Michigan's Upper Peninsula.
+                
+        
+          -98.6
+          -81.5
+          49.75
+          41.5
+        
+      
+      
+        
+          
+            
+              Absolute
+              2150 BP
+              All ages are expressed as years before present, following radiocarbon convention in which year 0 ('present') is set to 1950AD. Radiocarbon methods paper: Bronk Ramsey, C., 2008. Radiocarbon dating:  Revolutions in understanding. Archaeometry 50, 249-275.
+            
+          
+          
+            
+              Absolute
+              150 BP
+              All ages are expressed as years before present, following radiocarbon convention in which year 0 ('present') is set to 1950AD. Radiocarbon methods paper: Bronk Ramsey, C., 2008. Radiocarbon dating:  Revolutions in understanding. Archaeometry 50, 249-275.
+            
+          
+        
+      
+      
+        
+                    Other hardwood and conifer tree species are grouped into an “Other hardwood” and "Other conifer" categories.
+                
+        
+          
+                        Ash
+                    
+          
+            
+                            Fraxinus spp.
+                        
+          
+        
+        
+          
+                        Beech
+                    
+          
+            
+                            Fagus spp.
+                        
+          
+        
+        
+          
+                        Birch
+                    
+          
+            
+                            Betula spp.
+                        
+          
+        
+        
+          
+                        Elm
+                    
+          
+            
+                            Ulmus spp.
+                        
+          
+        
+        
+          
+                        Hemlock
+                    
+          
+            
+                            Tsuga canadensis
+                        
+          
+        
+        
+          
+                        Maple
+                    
+          
+            
+                            Acer spp.
+                        
+          
+        
+        
+          
+                        Oak
+                    
+          
+            
+                            Quercus spp.
+                        
+          
+        
+        
+          
+                        Pine
+                    
+          
+            
+                            Pinus spp.
+                        
+          
+        
+        
+          
+                        Spruce
+                    
+          
+            
+                            Picea spp.
+                        
+          
+        
+        
+          
+                        Tamarack
+                    
+          
+            
+                            Larix laricina
+                        
+          
+        
+      
+    
+    
+      Dr. Andria Dawson
+      Lead PI
+      Mount Royal University
+      4034407085
+      adawson@mtroyal.ca
+    
+    Environmental Data Initiativeinfo@environmentaldatainitiative.orghttps://environmentaldatainitiative.orgEnvironmental Data Initiative
+      
+        
+          
+                         See the methods sections in: Dawson et al., 2019, Quantifying trends and uncertainty in prehistoric forest composition in the upper Midwestern United States, Ecology
+						 Dawson et al., 2016, Quantifying pollen-vegetation relationships to reconstruct ancient forests using 19th-century forest composition and pollen data, Quaternary Science Reviews
+
+                     
+        
+      
+    
+    
+      
+                 Paleo-ecological Observatory Network (PalEON)
+             
+      
+        Jason McLachlan
+        			100 Galvin Life Sciences
+			Notre Dame, IN 46615  USA
+        (574) 631 1850
+        jmclachl@nd.edu
+        Lead PI
+      
+      
+        Jody Peters
+        			100 Galvin Life Sciences
+			Notre Dame, IN 46615  USA
+        peters.63@nd.edu
+        Co - Information Manager
+      
+      
+        
+                     PalEON (the PaleoEcological Observatory Network) is an interdisciplinary team of paleoecologists, ecological statisticians, and ecosystem modelers. Our goal is to reconstruct forest composition, fire regime, and climate in forests across the northeastern US and Alaska over the past 2000 years and then use this to drive and validate terrestrial ecosystem models. We will develop a coherent spatiotemporal inference framework to quantify trends and extreme events in paleoecological and paleoclimatic time series. Variables such as forest composition, fire regime, and moisture balance will be inferred from corresponding paleoecological proxies, with rigorous estimates of uncertainty.
+                 
+        
+                     These datasets will be applied to improve terrestrial ecosystem models in two contexts. First, we are developing specific data products, such as high- resolution settlement-era forest composition maps from witness tree and General Land Office data, that can be used to drive ecosystem models. PalEON will develop formal data assimilation tools that will allow the models we use to forecast on centennial scales to be informed by decadal- to centennial-scale data. Second, are developing data products for the purpose of model validation (e.g. fire-frequency reconstructions from sedimentary charcoal data). These long-term validation datasets will help us assess the ability of these models to capture past dynamics correctly, and will help us understand why their future projections are so divergent.
+                 
+      
+      
+        
+                     This material is based upon work supported by the National Science Foundation under Grants #DEB-1241874, 1241868, 1241870, 1241851, 1241891, 1241846, 1241856, 1241930. Any opinions, findings, conclusions, or recommendations expressed in the material are those of the author(s) and do not necessarily reflect the views of the National Science Foundation.
+                 
+      
+    
+    
+      2Kyrs_Comp_Mean_Level2_v1.0
+      netCDF files with dimensions x, y and time (from 2150 years before present to 150 years before present, in 100 year intervals). The variables that store the mean of the posterior estimates of relative abundance are: "ASH","BEECH", "BIRCH", "ELM", "HEMLOCK", "MAPLE", "OAK", "OTHER.CONIFER", "OTHER.HARDWOOD", "PINE", "SPRUCE", "TAMARACK". There are also variables that store information about the projection. These variables are called:“projection”, “Spatial_Reference”, “Projection_Name” 
+			 
+      
+        2Kyrs_Comp_Mean_Level2_v1.0.nc
+        
+          
+            netCDF
+          
+        
+        
+          
+            https://pasta.lternet.edu/package/data/eml/msb-paleon/22/1/0081bff74e1d27e6c85186b41d531cd2
+          
+        
+      
+      netCDF
+    
+    
+      2Kyrs_Comp_SD_Level2_v1.0
+      netCDF files with dimensions x, y and time (from 2150 years before present to 150 years before present, in 100 year intervals). The variables that store the standard deviation of the posterior estimates of relative abundance are: "ASH","BEECH", "BIRCH", "ELM", "HEMLOCK", "MAPLE", "OAK", "OTHER.CONIFER", "OTHER.HARDWOOD", "PINE", "SPRUCE", "TAMARACK". There are also variables that store information about the projection. These variables are called:“projection”, “Spatial_Reference”, “Projection_Name”
+			 
+      
+        2Kyrs_Comp_SD_Level2_v1.0.nc
+        
+          
+            netCDF
+          
+        
+        
+          
+            https://pasta.lternet.edu/package/data/eml/msb-paleon/22/1/571191cb7209a55ef962c9b40292bc4e
+          
+        
+      
+      netCDF
+    
+  
+  
+    
+      
+                Publications: 1) Dawson et al., 2019, Quantifying trends and uncertainty in prehistoric forest composition in the upper Midwestern United States, Ecology 2) Dawson et al., 2016, Quantifying pollen-vegetation relationships to reconstruct ancient forests using 19th-century forest composition and pollen data, Quaternary Science Reviews
+            
+    
+  

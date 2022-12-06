@@ -1,0 +1,505 @@
+
+  
+    
+      uid=PALEON,o=LTER,dc=ecoinformatics,dc=org
+      all
+    
+    
+      public
+      read
+    
+  
+  
+    8k-yr-ForestComp_NorthEastUS_Level2_v1.0
+    doi:10.6073/pasta/06e149ccece9015a23fc332d8f7de47cSTEPPS 8000 Year Forest Composition Estimates, Northeastern US, Level 2
+
+    
+      Dr. Mathias Trachsel
+      University of Wisconsin, Madison
+    
+    
+      Dr. Andria Dawson
+      Mount Royal University
+    
+    
+      Dr. Christopher J. Paciorek
+      University of California, Berkeley
+    
+    
+      Dr. Stephen T. Jackson
+      Southwest Climate Science Center and University of Arizona
+    
+    
+      Dr. Jason S. McLachlan
+      University of Notre Dame
+    
+    
+      Dr. John W. Williams
+      University of Wisconsin, Madison
+    
+    
+      Dr. Charles Cogbill
+      Harvard Forest
+    
+    
+      Dr. David Foster
+      Harvard Forest and Harvard University
+    
+    
+      Dr. Bryan Shuman
+      University of Wyoming
+    
+    
+      Dr. W. Wyatt Oswald
+      Harvard Forest and Emerson College
+    
+    
+      McLachlan Lab
+      			Notre Dame Biology Department
+			Bio Dept address
+			Notre Dame, IN 46615  USA
+      jmclachl@nd.edu
+      https://sites.nd.edu/paleonproject/
+    
+    2020-12-03
+    english
+    
+      
+                These reconstructions of forest composition in the northeastern US for the last 8,000 years help establish natural baselines, variability, and trajectories of forest dynamics before and during the emergence of intensive anthropogenic land use. These reconstructions are based on 1) the pollen–vegetation model (PVM) STEPPS, 2) a network of fossil and modern pollen data mostly drawn from the Neotoma Paleoecology Database (www.neotomadb.org), and 3) a vegetation calibration dataset based on a spatial statistical model of relative tree abundances from the Township Proprietor Survey (TPS) from the early EuroAmerican settlement period.  STEPPS is a process-based Bayesian Hierarchical Model that is run in two stages:  a parameterization stage based upon spatial data layers of forest composition and pollen assemblages, and a prediction stage based on fossil pollen assemblages.  The statistical modeling of the TPS forest data and relative abundances is described by Paciorek et al. (2016, PLoS One, doi: 10.1371/journal.pone.0150087) and is available at EDI as PalEON Products msb.paleon.1 (doi: 10.6073/pasta/8544e091b64db26fdbbbafd0699fa4f9) and msb.paleon.4 (doi: 10.6073/pasta/3c4844cfe8beff6b173b62034d1cb5d8). The parameterization of STEPPS and comparison to REVEALS, a different widely used PVM, is described by Trachsel et al. (2020, Quaternary Research, doi:10.1017/qua.2019.81). Both PVMs predict the observed macroscale patterns of vegetation composition in the NEUS; however, reconstructions of minor taxa are less accurate and predictions for some taxa differ between PVMs. These differences can be attributed to intermodel differences in structure and parameter estimates. STEPPS parameter estimates are similar between the UMW and NEUS, suggesting that STEPPS parameter estimates are transferable between floristically similar regions and scales.  The parameterized STEPPS model was then run for a network of fossil pollen records from the Neotoma Paleoecology Database to produce posterior estimates of forest composition at 250-year intervals for the last 8,000 years.  The work from this prediction stage was not published at the time of deposition of these records with EDI.  Hence, at this time, this EDI data deposition is the primary citation endpoint.  The prediction methods generally follow those described by Dawson et al. (2019, Ecology, doi: 10.1002/ecy.2856).  This material is based upon work supported by the National Science Foundation under grants #DEB-1241874, 1241868, 1241870, 1241851, 1241891, 1241846, 1241856, 1241930.
+            
+    
+    
+      biogeography
+      community composition
+      community patterns
+      maps
+      plant species
+      spatial variability
+      species composition
+      tree maps
+      trees
+      LTER controlled vocabulary
+    
+    
+      We are using the CC-BY 4.0 (Creative Commons Attribution 4.0 International) License. Details of this license can be found here: http://creativecommons.org/licenses/by/4.0/legalcode
+    
+    
+      
+         
+                    Northeastern United States, including Maine, New Hampshire, Vermont, Massachusetts, Rhode Island, Connecticut, parts of New York, Pennsylvania, and New Jersey. 
+                
+        
+          -79.5
+          -66
+          48
+          39.5
+        
+      
+      
+        
+          
+            
+              Absolute
+              7955 BP
+              All ages are expressed as years before present, following radiocarbon convention in which year 0 ('present') is set to 1950AD. Radiocarbon methods paper: Bronk Ramsey, C., 2008. Radiocarbon dating:  Revolutions in understanding. Archaeometry 50, 249-275.
+            
+          
+          
+            
+              Absolute
+              205 BP
+              All ages are expressed as years before present, following radiocarbon convention in which year 0 ('present') is set to 1950AD. Radiocarbon methods paper: Bronk Ramsey, C., 2008. Radiocarbon dating:  Revolutions in understanding. Archaeometry 50, 249-275.
+            
+          
+        
+      
+      
+        
+                    Other hardwood and conifer tree species are grouped into an “Other hardwood” and "Other conifer" categories.
+                
+        
+          
+                        Ash
+                    
+          
+            
+                            Fraxinus spp.
+                        
+          
+        
+        
+          
+                        Beech
+                    
+          
+            
+                            Fagus spp.
+                        
+          
+        
+        
+          
+                        Birch
+                    
+          
+            
+                            Betula spp.
+                        
+          
+        
+        
+          
+                        Chestnut
+                    
+          
+            
+                            Castanea spp.
+                        
+          
+        
+        
+          
+                        Hemlock
+                    
+          
+            
+                            Tsuga canadensis
+                        
+          
+        
+        
+          
+                        Hickory
+                    
+          
+            
+                            Carya spp.
+                        
+          
+        
+        
+          
+                        Maple
+                    
+          
+            
+                            Acer spp.
+                        
+          
+        
+        
+          
+                        Oak
+                    
+          
+            
+                            Quercus spp.
+                        
+          
+        
+        
+          
+                        Pine
+                    
+          
+            
+                            Pinus spp.
+                        
+          
+        
+        
+          
+                        Spruce
+                    
+          
+            
+                            Picea spp.
+                        
+          
+        
+        
+          
+                        Tamarack
+                    
+          
+            
+                            Larix laricina
+                        
+          
+        
+      
+    
+    
+      Dr. Andria Dawson
+      Lead PI
+      Mount Royal University
+      4034407085
+      adawson@mtroyal.ca
+    
+    
+      Dr. Mathias Trachsel
+      Lead PI
+      University of Wisconsin, Madison
+      mtrachs@gmail.com
+    
+    Environmental Data Initiativeinfo@environmentaldatainitiative.orghttps://environmentaldatainitiative.orgEnvironmental Data Initiative
+      
+        
+          
+                         See methods section of 1) Trachsel, M., Dawson, A., Paciorek, C.J., Williams, J.W., McLachlan, J.S., Cogbill, C.V., Foster, D.R., Goring, S.J., Jackson, S.T., Oswald,W.W., Shuman, B.N. (2020). Comparison of settlement-era vegetation reconstructions for STEPPS and REVEALS pollen–vegetation models in the northeastern United States. Quaternary Research, 95, 23-42. doi:10.1017/qua.2019.81
+						 2) Trachsel et al in prep, Mid to late Holocene quantitative and spatially explicit reconstructions of forest composition in the northeastern United States, Journal of Biogeography
+                     
+        
+      
+    
+    
+      
+                 Paleo-ecological Observatory Network (PalEON)
+             
+      
+        Jason McLachlan
+        			100 Galvin Life Sciences
+			Notre Dame, IN 46615  USA
+        (574) 631 1850
+        jmclachl@nd.edu
+        Lead PI
+      
+      
+        Jody Peters
+        			100 Galvin Life Sciences
+			Notre Dame, IN 46615  USA
+        peters.63@nd.edu
+        Co - Information Manager
+      
+      
+        
+                     PalEON (the PaleoEcological Observatory Network) is an interdisciplinary team of paleoecologists, ecological statisticians, and ecosystem modelers. Our goal is to reconstruct forest composition, fire regime, and climate in forests across the northeastern US and Alaska over the past 2000 years and then use this to drive and validate terrestrial ecosystem models. We will develop a coherent spatiotemporal inference framework to quantify trends and extreme events in paleoecological and paleoclimatic time series. Variables such as forest composition, fire regime, and moisture balance will be inferred from corresponding paleoecological proxies, with rigorous estimates of uncertainty.
+                 
+        
+                     These datasets will be applied to improve terrestrial ecosystem models in two contexts. First, we are developing specific data products, such as high- resolution settlement-era forest composition maps from witness tree and General Land Office data, that can be used to drive ecosystem models. PalEON will develop formal data assimilation tools that will allow the models we use to forecast on centennial scales to be informed by decadal- to centennial-scale data. Second, are developing data products for the purpose of model validation (e.g. fire-frequency reconstructions from sedimentary charcoal data). These long-term validation datasets will help us assess the ability of these models to capture past dynamics correctly, and will help us understand why their future projections are so divergent.
+                 
+      
+      
+        
+                     This material is based upon work supported by the National Science Foundation under Grants #DEB-1241874, 1241868, 1241870, 1241851, 1241891, 1241846, 1241856, 1241930. Any opinions, findings, conclusions, or recommendations expressed in the material are those of the author(s) and do not necessarily reflect the views of the National Science Foundation.
+                 
+      
+    
+    
+      STEPPS-fractional-composition_NEUS-mean
+      netCDF files with dimensions x (meters), y  (meters) and time (from 7955 BP to 205 BP, in 250 year intervals). The variables that store the mean proportion of the posterior estimates of relative abundance are: "Ash","Beech", "Birch", "Chestnut", "Hemlock", "Hickory", "Maple", "Oak", "Oher conifer", "Other hardwood", "Pine", "Spruce", "Tamarack". There are also variables that store information about the projection. These variables are called:“projection” (NAD83/Great Lakes St. Lawrence Albers), “Spatial_Reference” (ESPG:3175), “Projection_Name” (Albers Equal Area)
+			 
+      
+        STEPPS-fractional-composition_NEUS-mean.nc
+        
+          
+            netCDF
+          
+        
+        
+          
+            https://pasta.lternet.edu/package/data/eml/msb-paleon/44/0/9f38e7b6b54ea9bc676f07cfc2e9f28d
+          
+        
+      
+      netCDF
+    
+    
+      STEPPS-fractional-composition_NEUS-sd
+      netCDF files with dimensions x (meters), y  (meters) and time (from 7955 BP to 205 BP, in 250 year intervals). The variables that store the standard deviation of the proportion of the posterior estimates of relative abundance are: "Ash","Beech", "Birch", "Chestnut", "Hemlock", "Hickory", "Maple", "Oak", "Oher conifer", "Other hardwood", "Pine", "Spruce", "Tamarack". There are also variables that store information about the projection. These variables are called:“projection” (NAD83/Great Lakes St. Lawrence Albers), “Spatial_Reference” (ESPG:3175), “Projection_Name” (Albers Equal Area)
+			 
+      
+        STEPPS-fractional-composition_NEUS-sd.nc
+        
+          
+            netCDF
+          
+        
+        
+          
+            https://pasta.lternet.edu/package/data/eml/msb-paleon/44/0/9738c8b9c9b834ccb77c0650614cbe2e
+          
+        
+      
+      netCDF
+    
+    
+      STEPPS-fractional-composition_NEUS_2.5_percentile
+      netCDF files with dimensions x (meters), y  (meters) and time (from 7955 BP to 205 BP, in 250 year intervals). The variables that store the 2.5th percentile of the proportion of the posterior estimates of relative abundance are: "Ash","Beech", "Birch", "Chestnut", "Hemlock", "Hickory", "Maple", "Oak", "Oher conifer", "Other hardwood", "Pine", "Spruce", "Tamarack". There are also variables that store information about the projection. These variables are called:“projection” (NAD83/Great Lakes St. Lawrence Albers), “Spatial_Reference” (ESPG:3175), “Projection_Name” (Albers Equal Area)
+			 
+      
+        STEPPS-fractional-composition_NEUS_2.5_percentile.nc
+        
+          
+            netCDF
+          
+        
+        
+          
+            https://pasta.lternet.edu/package/data/eml/msb-paleon/44/0/dafdccaf2978398c68747c156f1a76d9
+          
+        
+      
+      netCDF
+    
+    
+      STEPPS-fractional-composition_NEUS_5_percentile
+      netCDF files with dimensions x (meters), y  (meters) and time (from 7955 BP to 205 BP, in 250 year intervals). The variables that store the 5th percentile of the proportion of the posterior estimates of relative abundance are: "Ash","Beech", "Birch", "Chestnut", "Hemlock", "Hickory", "Maple", "Oak", "Oher conifer", "Other hardwood", "Pine", "Spruce", "Tamarack". There are also variables that store information about the projection. These variables are called:“projection” (NAD83/Great Lakes St. Lawrence Albers), “Spatial_Reference” (ESPG:3175), “Projection_Name” (Albers Equal Area)
+			 
+      
+        STEPPS-fractional-composition_NEUS_5_percentile.nc
+        
+          
+            netCDF
+          
+        
+        
+          
+            https://pasta.lternet.edu/package/data/eml/msb-paleon/44/0/e3e3a0e96a2ab693d6b496191086cc28
+          
+        
+      
+      netCDF
+    
+    
+      STEPPS-fractional-composition_NEUS_10_percentile
+      netCDF files with dimensions x (meters), y  (meters) and time (from 7955 BP to 205 BP, in 250 year intervals). The variables that store the 10th percentile of the proportion of the posterior estimates of relative abundance are: "Ash","Beech", "Birch", "Chestnut", "Hemlock", "Hickory", "Maple", "Oak", "Oher conifer", "Other hardwood", "Pine", "Spruce", "Tamarack". There are also variables that store information about the projection. These variables are called:“projection” (NAD83/Great Lakes St. Lawrence Albers), “Spatial_Reference” (ESPG:3175), “Projection_Name” (Albers Equal Area)
+			 
+      
+        STEPPS-fractional-composition_NEUS_10_percentile.nc
+        
+          
+            netCDF
+          
+        
+        
+          
+            https://pasta.lternet.edu/package/data/eml/msb-paleon/44/0/02389da4a82a109a50267cdf45f47000
+          
+        
+      
+      netCDF
+    
+    
+      STEPPS-fractional-composition_NEUS_16.6_percentile
+      netCDF files with dimensions x (meters), y  (meters) and time (from 7955 BP to 205 BP, in 250 year intervals). The variables that store the 16.6th percentile of the proportion of the posterior estimates of relative abundance are: "Ash","Beech", "Birch", "Chestnut", "Hemlock", "Hickory", "Maple", "Oak", "Oher conifer", "Other hardwood", "Pine", "Spruce", "Tamarack". There are also variables that store information about the projection. These variables are called:“projection” (NAD83/Great Lakes St. Lawrence Albers), “Spatial_Reference” (ESPG:3175), “Projection_Name” (Albers Equal Area)
+			 
+      
+        STEPPS-fractional-composition_NEUS_16.6_percentile.nc
+        
+          
+            netCDF
+          
+        
+        
+          
+            https://pasta.lternet.edu/package/data/eml/msb-paleon/44/0/2d050e326aab7e13b49f4e32794cb216
+          
+        
+      
+      netCDF
+    
+    
+      STEPPS-fractional-composition_NEUS_50_percentile
+      netCDF files with dimensions x (meters), y  (meters) and time (from 7955 BP to 205 BP, in 250 year intervals). The variables that store the 50th percentile of the proportion of the posterior estimates of relative abundance are: "Ash","Beech", "Birch", "Chestnut", "Hemlock", "Hickory", "Maple", "Oak", "Oher conifer", "Other hardwood", "Pine", "Spruce", "Tamarack". There are also variables that store information about the projection. These variables are called:“projection” (NAD83/Great Lakes St. Lawrence Albers), “Spatial_Reference” (ESPG:3175), “Projection_Name” (Albers Equal Area)
+			 
+      
+        STEPPS-fractional-composition_NEUS_50_percentile.nc
+        
+          
+            netCDF
+          
+        
+        
+          
+            https://pasta.lternet.edu/package/data/eml/msb-paleon/44/0/3f8dd83dadfb7c3462aec09ef05f3884
+          
+        
+      
+      netCDF
+    
+    
+      STEPPS-fractional-composition_NEUS_83.30_percentile
+      netCDF files with dimensions x (meters), y  (meters) and time (from 7955 BP to 205 BP, in 250 year intervals). The variables that store the 83.3rd percentile of the proportion of the posterior estimates of relative abundance are: "Ash","Beech", "Birch", "Chestnut", "Hemlock", "Hickory", "Maple", "Oak", "Oher conifer", "Other hardwood", "Pine", "Spruce", "Tamarack". There are also variables that store information about the projection. These variables are called:“projection” (NAD83/Great Lakes St. Lawrence Albers), “Spatial_Reference” (ESPG:3175), “Projection_Name” (Albers Equal Area)
+			 
+      
+        STEPPS-fractional-composition_NEUS_83.3_percentile.nc
+        
+          
+            netCDF
+          
+        
+        
+          
+            https://pasta.lternet.edu/package/data/eml/msb-paleon/44/0/19fe30ff72f2571c5335e1b214f0ab19
+          
+        
+      
+      netCDF
+    
+    
+      STEPPS-fractional-composition_NEUS_90_percentile
+      netCDF files with dimensions x (meters), y  (meters) and time (from 7955 BP to 205 BP, in 250 year intervals). The variables that store the 90th percentile of the proportion of the posterior estimates of relative abundance are: "Ash","Beech", "Birch", "Chestnut", "Hemlock", "Hickory", "Maple", "Oak", "Oher conifer", "Other hardwood", "Pine", "Spruce", "Tamarack". There are also variables that store information about the projection. These variables are called:“projection” (NAD83/Great Lakes St. Lawrence Albers), “Spatial_Reference” (ESPG:3175), “Projection_Name” (Albers Equal Area)
+			 
+      
+        STEPPS-fractional-composition_NEUS_90_percentile.nc
+        
+          
+            netCDF
+          
+        
+        
+          
+            https://pasta.lternet.edu/package/data/eml/msb-paleon/44/0/3b1e0bcaab880fda66cad5396c74a404
+          
+        
+      
+      netCDF
+    
+    
+      STEPPS-fractional-composition_NEUS_95_percentile
+      netCDF files with dimensions x (meters), y  (meters) and time (from 7955 BP to 205 BP, in 250 year intervals). The variables that store the 95th percentile of the proportion of the posterior estimates of relative abundance are: "Ash","Beech", "Birch", "Chestnut", "Hemlock", "Hickory", "Maple", "Oak", "Oher conifer", "Other hardwood", "Pine", "Spruce", "Tamarack". There are also variables that store information about the projection. These variables are called:“projection” (NAD83/Great Lakes St. Lawrence Albers), “Spatial_Reference” (ESPG:3175), “Projection_Name” (Albers Equal Area)
+			 
+      
+        STEPPS-fractional-composition_NEUS_95_percentile.nc
+        
+          
+            netCDF
+          
+        
+        
+          
+            https://pasta.lternet.edu/package/data/eml/msb-paleon/44/0/67f687d86888ae3f81bba2a4180186ca
+          
+        
+      
+      netCDF
+    
+    
+      STEPPS-fractional-composition_NEUS_97.5_percentile
+      netCDF files with dimensions x (meters), y  (meters) and time (from 7955 BP to 205 BP, in 250 year intervals). The variables that store the 97.5th percentile of the proportion of the posterior estimates of relative abundance are: "Ash","Beech", "Birch", "Chestnut", "Hemlock", "Hickory", "Maple", "Oak", "Oher conifer", "Other hardwood", "Pine", "Spruce", "Tamarack". There are also variables that store information about the projection. These variables are called:“projection” (NAD83/Great Lakes St. Lawrence Albers), “Spatial_Reference” (ESPG:3175), “Projection_Name” (Albers Equal Area)
+			 
+      
+        STEPPS-fractional-composition_NEUS_97.5_percentile.nc
+        
+          
+            netCDF
+          
+        
+        
+          
+            https://pasta.lternet.edu/package/data/eml/msb-paleon/44/0/018f7fdc2c9a4440928e838085bd493b
+          
+        
+      
+      netCDF
+    
+  
+  
+    
+      
+                Publications: 1) Trachsel, M., Dawson, A., Paciorek, C.J., Williams, J.W., McLachlan, J.S., Cogbill, C.V., Foster, D.R., Goring, S.J., Jackson, S.T., Oswald,W.W., Shuman, B.N. (2020). Comparison of settlement-era vegetation reconstructions for STEPPS and REVEALS pollen–vegetation models in the northeastern United States. Quaternary Research, 95, 23-42. doi:10.1017/qua.2019.81
+				2) Trachsel et al in prep, Mid to late Holocene quantitative and spatially explicit reconstructions of forest composition in the northeastern United States, Journal of Biogeography
+            
+    
+  

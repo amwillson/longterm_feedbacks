@@ -1,0 +1,6 @@
+Manifest file for msb-paleon.22.1-4c9184f37cff01bcdc32dc486ec36961.zip created on Mon Feb 15 14:23:42 MST 2021
+2Kyrs_Comp_Mean_Level2_v1.0.nc (1439388 bytes)
+2Kyrs_Comp_SD_Level2_v1.0.nc (1439292 bytes)
+msb-paleon.22.1.xml (19175 bytes)
+msb-paleon.22.1.txt (11531 bytes)
+msb-paleon.22.1.report.xml (29431 bytes)
