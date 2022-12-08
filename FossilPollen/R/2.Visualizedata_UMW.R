@@ -3,6 +3,8 @@
 
 rm(list = ls())
 
+library(tidyverse)
+
 # Load data
 load('FossilPollen/Data/full_melt_UMW.RData')
 
@@ -186,3 +188,4 @@ full_format %>%
   ylab('Fractional Composition') +
   scale_color_viridis_d() +
   ylim(0, 1)
+
