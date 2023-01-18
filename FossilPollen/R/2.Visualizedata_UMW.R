@@ -13,7 +13,8 @@ load('FossilPollen/Data/full_melt_UMW.RData')
 full_format <- full_melt %>%
   pivot_longer(cols = c(ash, beech, birch, elm, hemlock, maple, oak, other_conifer,
                         other_hardwood, pine, spruce, tamarack))
-colnames(full_format) <- c('x', 'y', 'time', 'loc', 'loc_time', 'taxon', 'fc')
+#colnames(full_format) <- c('x', 'y', 'time', 'loc', 'loc_time', 'taxon', 'fc')
+colnames(full_format) <- c('time', 'long', 'lat', 'loc_time', 'taxon', 'fc')
 
 ## 1. stacked bars
 
@@ -24,11 +25,13 @@ full_format %>%
   geom_bar(position = 'stack', stat = 'identity') +
   scale_x_reverse() +
   ggtitle('Fractional composition over time in the Upper Midwest') +
-  xlab('Time (years BP)') +
+  xlab('Time (years before 1950)') +
   ylab('Relative Composition') +
   scale_fill_viridis_d()
 
 # sample locations
+full_format <- full_format %>%
+  mutate(loc = paste0(long,'_',lat))
 locs = unique(full_format$loc)
 
 full_format %>%
@@ -37,7 +40,7 @@ full_format %>%
   geom_bar(position = 'stack', stat = 'identity') +
   scale_x_reverse() +
   ggtitle('Fractional composition at a given location over time') +
-  xlab('Time (years BP)') +
+  xlab('Time (years before 1950)') +
   ylab('Fractional Composition') +
   scale_fill_viridis_d()
 
@@ -52,7 +55,7 @@ full_format %>%
   scale_x_reverse() +
   theme(legend.position = 'none') +
   ggtitle('Ash fractional composition over time') +
-  xlab('Time (years BP)') +
+  xlab('Time (years before 1950)') +
   ylab('Fractional Composition') +
   scale_color_viridis_d() +
   ylim(0, 1)
@@ -64,7 +67,7 @@ full_format %>%
   scale_x_reverse() +
   theme(legend.position = 'none') +
   ggtitle('Beech fractional composition over time') +
-  xlab('Time (years BP)') +
+  xlab('Time (years before 1950)') +
   ylab('Fractional Composition') +
   scale_color_viridis_d() +
   ylim(0, 1)
@@ -76,7 +79,7 @@ full_format %>%
   scale_x_reverse() +
   theme(legend.position = 'none') +
   ggtitle('Birch fractional composition over time') +
-  xlab('Time (years BP)') +
+  xlab('Time (years before 1950)') +
   ylab('Fractional Composition') +
   scale_color_viridis_d() +
   ylim(0, 1)
@@ -88,7 +91,7 @@ full_format %>%
   scale_x_reverse() +
   theme(legend.position = 'none') +
   ggtitle('Elm fractional composition over time') +
-  xlab('Time (years BP)') +
+  xlab('Time (years before 1950)') +
   ylab('Fractional Composition') +
   scale_color_viridis_d() +
   ylim(0, 1)
@@ -100,7 +103,7 @@ full_format %>%
   scale_x_reverse() +
   theme(legend.position = 'none') +
   ggtitle('Hemlock fractional composition over time') +
-  xlab('Time (years BP)') +
+  xlab('Time (years before 1950)') +
   ylab('Fractional Composition') +
   scale_color_viridis_d() +
   ylim(0, 1)
@@ -112,7 +115,7 @@ full_format %>%
   scale_x_reverse() +
   theme(legend.position = 'none') +
   ggtitle('Maple fractional composition over time') +
-  xlab('Time (years BP)') +
+  xlab('Time (years before 1950)') +
   ylab('Fractional Composition') +
   scale_color_viridis_d() +
   ylim(0, 1)
@@ -124,7 +127,7 @@ full_format %>%
   scale_x_reverse() +
   theme(legend.position = 'none') +
   ggtitle('Oak fractional composition over time') +
-  xlab('Time (years BP)') +
+  xlab('Time (years before 1950)') +
   ylab('Fractional Composition') +
   scale_color_viridis_d() +
   ylim(0, 1)
@@ -136,7 +139,7 @@ full_format %>%
   scale_x_reverse() +
   theme(legend.position = 'none') +
   ggtitle('Other conifer fractional composition over time') +
-  xlab('Time (years BP)') +
+  xlab('Time (years before 1950)') +
   ylab('Fractional Composition') +
   scale_color_viridis_d() +
   ylim(0, 1)
@@ -148,7 +151,7 @@ full_format %>%
   scale_x_reverse() +
   theme(legend.position = 'none') +
   ggtitle('Other hardwood fractional composition over time') +
-  xlab('Time (years BP)') +
+  xlab('Time (years before 1950)') +
   ylab('Fractional Composition') +
   scale_color_viridis_d() +
   ylim(0, 1)
@@ -160,7 +163,7 @@ full_format %>%
   scale_x_reverse() +
   theme(legend.position = 'none') +
   ggtitle('Pine fractional composition over time') +
-  xlab('Time (years BP)') +
+  xlab('Time (years before 1950)') +
   ylab('Fractional Composition') +
   scale_color_viridis_d() +
   ylim(0, 1)
@@ -172,7 +175,7 @@ full_format %>%
   scale_x_reverse() +
   theme(legend.position = 'none') +
   ggtitle('Spruce fractional composition over time') +
-  xlab('Time (years BP)') +
+  xlab('Time (years before 1950)') +
   ylab('Fractional Composition') +
   scale_color_viridis_d() +
   ylim(0, 1)
@@ -184,7 +187,7 @@ full_format %>%
   scale_x_reverse() +
   theme(legend.position = 'none') +
   ggtitle('Tamarack fractional composition over time') +
-  xlab('Time (years BP)') +
+  xlab('Time (years before 1950)') +
   ylab('Fractional Composition') +
   scale_color_viridis_d() +
   ylim(0, 1)

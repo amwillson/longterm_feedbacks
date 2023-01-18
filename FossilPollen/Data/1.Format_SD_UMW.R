@@ -1,5 +1,4 @@
-## Working with Fossil Pollen data
-## From Upper Midwest
+rm(list = ls())
 
 library(ncdf4)
 library(reshape2)
@@ -7,30 +6,28 @@ library(tidyverse)
 library(sp)
 library(era)
 
-rm(list = ls())
-
 # Open data
-fc <- nc_open('FossilPollen/Data/msb-paleon-2/2Kyrs_Comp_Mean_Level2_v1.0.nc')
+data <- nc_open('./FossilPollen/Data/msb-paleon-2/2Kyrs_Comp_SD_Level2_v1.0.nc')
 
 # Get lon, lat, time
 # x and y are flipped to get the right easting and northing directions
-y <- ncvar_get(fc, 'x')
-x <- ncvar_get(fc, 'y')
-time <- ncvar_get(fc, 'Time')
+y <- ncvar_get(data, 'x')
+x <- ncvar_get(data, 'y')
+time <- ncvar_get(data, 'Time')
 
 # Fractional composition
-ash <- ncvar_get(fc, 'ASH')
-beech <- ncvar_get(fc, 'BEECH')
-birch <- ncvar_get(fc, 'BIRCH')
-elm <- ncvar_get(fc, 'ELM')
-hemlock <- ncvar_get(fc, 'HEMLOCK')
-maple <- ncvar_get(fc, 'MAPLE')
-oak <- ncvar_get(fc, 'OAK')
-other_conifer <- ncvar_get(fc, 'OTHER.CONIFER')
-other_hardwood <- ncvar_get(fc, 'OTHER.HARDWOOD')
-pine <- ncvar_get(fc, 'PINE')
-spruce <- ncvar_get(fc, 'SPRUCE')
-tamarack <- ncvar_get(fc, 'TAMARACK')
+ash <- ncvar_get(data, 'ASH')
+beech <- ncvar_get(data, 'BEECH')
+birch <- ncvar_get(data, 'BIRCH')
+elm <- ncvar_get(data, 'ELM')
+hemlock <- ncvar_get(data, 'HEMLOCK')
+maple <- ncvar_get(data, 'MAPLE')
+oak <- ncvar_get(data, 'OAK')
+other_conifer <- ncvar_get(data, 'OTHER.CONIFER')
+other_hardwood <- ncvar_get(data, 'OTHER.HARDWOOD')
+pine <- ncvar_get(data, 'PINE')
+spruce <- ncvar_get(data, 'SPRUCE')
+tamarack <- ncvar_get(data, 'TAMARACK')
 
 # Replace dimension names
 dimnames(ash) <- list(y, x, time)
@@ -153,13 +150,6 @@ for(i in 1:nrow(full_melt)){
 
 full_melt_rm <- full_melt[-for_removal,]
 full_melt <- full_melt_rm
+full_sd <- full_melt
 
-# Check the final extent of the data
-states %>%
-  filter(region %in% c('illinois', 'indiana', 'michigan', 'minnesota', 'wisconsin')) %>%
-  ggplot() +
-  geom_polygon(aes(x = long, y = lat, group = group), fill = 'white', color = 'black') +
-  coord_map('albers', lat0 = 45.5, lat1 = 29.5) +
-  geom_point(data = full_melt, aes(x = long, y = lat, color = hemlock), alpha = 0.05)
-
-save(full_melt, file = 'FossilPollen/Data/full_melt_UMW.RData')
+save(full_sd, file = './FossilPollen/Data/sd_UMW.RData')
