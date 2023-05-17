@@ -192,3 +192,68 @@ full_format %>%
   scale_color_viridis_d() +
   ylim(0, 1)
 
+states <- map_data('state') |>
+  filter(region %in% c('michigan', 'wisconsin', 'minnesota'))
+
+full_melt |>
+  select(time, pine, long, lat) |>
+  mutate(time = paste0(time, ' y BP')) |>
+  mutate(time = factor(time, levels = c('1900 y BP', '1800 y BP', '1700 y BP', '1600 y BP',
+                                        '1500 y BP', '1400 y BP', '1300 y BP', '1200 y BP',
+                                        '1100 y BP', '1000 y BP', '900 y BP', '800 y BP',
+                                        '700 y BP', '600 y BP', '500 y BP', '400 y BP',
+                                        '300 y BP', '200 y BP'))) |>
+  ggplot() +
+  geom_polygon(data = states, aes(x = long, y = lat, group = group), color = 'black', fill = 'white') +
+  geom_point(aes(x = long, y = lat, color = pine)) +
+  facet_wrap(~time) +
+  theme_void() +
+  scale_color_viridis_c() +
+  labs(color = 'Proportion\nPine')
+
+test <- full_melt |>
+  select(time, pine, long, lat)
+
+sub <- test |>
+  filter(time == min(time))
+
+test_out <- matrix(, nrow = nrow(sub) * 17,
+                   ncol = 4)
+colnames(test_out) <- colnames(test)
+
+times <- unique(test$time)
+times <- rev(times)
+
+ind <- 1
+for(i in 1:nrow(sub)){
+  lon <- sub$long[i]
+  lat <- sub$lat[i]
+  temp <- test |> filter(long == lon) |> filter(lat == lat)
+  for(t in 1:(length(times)-1)){
+    present_time <- times[t+1]
+    previous_time <- times[t]
+    test_out[ind, 1] <- present_time
+    test_out[ind, 2] <- temp$pine[which(temp$time == present_time)] - temp$pine[which(temp$time == previous_time)]
+    test_out[ind, 3] <- lon
+    test_out[ind, 4] <- lat
+    ind <- ind + 1
+  }
+  print(i/nrow(sub))
+}
+
+test_out <- as.data.frame(test_out)
+
+test_out |>
+  mutate(time = paste0(time, ' y BP')) |>
+  mutate(time = factor(time, levels = c('1900 y BP', '1800 y BP', '1700 y BP', '1600 y BP',
+                                        '1500 y BP', '1400 y BP', '1300 y BP', '1200 y BP',
+                                        '1100 y BP', '1000 y BP', '900 y BP', '800 y BP',
+                                        '700 y BP', '600 y BP', '500 y BP', '400 y BP',
+                                        '300 y BP', '200 y BP'))) |>
+  ggplot() +
+  geom_polygon(data = states, aes(x = long, y = lat, group = group), color = 'black', fill = 'white') +
+  geom_point(aes(x = long, y = lat, color = pine)) +
+  facet_wrap(~time) +
+  theme_void() +
+  # scale_color_viridis_c(option = '') +
+  labs(color = 'Difference')

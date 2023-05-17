@@ -98,9 +98,9 @@ full_melt <- ash_melt %>%
   full_join(tamarack_melt, by = c('x', 'y', 'time'))
 
 # Format time to match climate data
-test <- full_melt %>%
-  mutate(time = yr(time * 100, era = 'BP'),
-         time = yr_transform(time, era = 'CE'))
+#full_melt <- full_melt %>%
+#  mutate(time = yr(time * 100, era = 'BP'),
+#         time = yr_transform(time, era = 'CE'))
 
 ## Convert coordinates to lat, long
 
@@ -161,5 +161,10 @@ states %>%
   geom_polygon(aes(x = long, y = lat, group = group), fill = 'white', color = 'black') +
   coord_map('albers', lat0 = 45.5, lat1 = 29.5) +
   geom_point(data = full_melt, aes(x = long, y = lat, color = hemlock), alpha = 0.05)
+
+# Remove dates for longer ago than we have climate reconstructions
+full_melt <- full_melt |>
+  mutate(time = time * 100) |>
+  filter(time < 2000)
 
 save(full_melt, file = 'FossilPollen/Data/full_melt_UMW.RData')
