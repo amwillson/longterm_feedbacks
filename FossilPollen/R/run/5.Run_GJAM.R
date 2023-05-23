@@ -1,24 +1,19 @@
-## Run GJAM for the Upper Midwest
-
 rm(list = ls())
 
 library(gjam)
-library(tidyverse)
 
-# Load data
+iter <- '3'
 
-load('FossilPollen/Data/spatial_data.RData')
+load('FossilPollen/Data/gjam_data_allyears.RData')
 
-#### Set up GJAM ####
+form1 <- as.formula(~Temperature + Precipitation)
 
-elist <- list(columns = 1:ncol(ydata),
-                   values = edata)
+mlist = list(ng = 1000, burnin = 800, typeNames = 'FC')
 
-form1 <- as.formula(~Temperature + Precipitation + Temperature * Precipitation)
+out <- gjam(form1, xdata = xdata, ydata = ydata, modelList = mlist)
 
-#### Run GJAM ####
+gjamPlot(out)
 
-# Prepare & run model
-mlist = list(ng = 100, burnin = 20, typeNames = 'FC',# betaPrior = prior,
-             effort = elist)
-out = gjam(form1, xdata = xdata, ydata = ydata, modelList = mlist)
+outfile <- paste0('FossilPollen/out/out_',iter,'.RData')
+
+save(out, file = outfile)

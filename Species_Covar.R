@@ -58,6 +58,8 @@ out.test_model <- coda.samples(model = jags.test_model,
                                variable.names = c('alpha', 'mu', 'Sigma'),
                                n.iter = 1000)
 
+plot(out.test_model)
+
 test_model <- "
 model{
 for(i in 1:nobs){
