@@ -189,5 +189,40 @@ for(i in 1:nrow(pairs)){
 clim_av <- as.data.frame(clim_av)
 colnames(clim_av) <- c('Latitude', 'Longitude', 'Year', 'Temperature', 'Precipitation')
 
+states <- map_data('state') |>
+  filter(region %in% c('minnesota', 'wisconsin', 'michigan'))
+
+clim_av |>
+  filter(Year %in% c(200, 1900)) |>
+  ggplot(aes(x = Longitude, y = Latitude, color = Temperature)) +
+  geom_polygon(data = states, aes(x = long, y = lat, group = group), color = 'black', fill = 'white') +
+  geom_point(size = 4) +
+  facet_wrap(~factor(Year, levels = c(1900, 200)), labeller = as_labeller(c(`200` = '200 YBP',
+                                             `1900` = '1900 YBP'))) +
+  theme_void() +
+  ggtitle('Temperature') +
+  labs(color = 'Temperature\n(°C)') +
+  scale_color_viridis_c(option = 'C') +
+  theme(plot.title = element_text(hjust = 0.5, face = 'bold', size = 18),
+        legend.title = element_text(size = 16),
+        legend.text = element_text(size = 14),
+        strip.text = element_text(size = 16))
+  
+clim_av |>
+  filter(Year %in% c(200, 1900)) |>
+  ggplot(aes(x = Longitude, y = Latitude, color = Precipitation)) +
+  geom_polygon(data = states, aes(x = long, y = lat, group = group), color = 'black', fill = 'white') +
+  geom_point(size = 4) +
+  facet_wrap(~factor(Year, levels = c(1900, 200)), labeller = as_labeller(c(`200` = '200 YBP',
+                                                                            `1900` = '1900 YBP'))) +
+  theme_void() +
+  ggtitle('Precipitation') +
+  labs(color = 'Precipitation\n(mm/month)') +
+  scale_color_viridis_c(option = 'C') +
+  theme(plot.title = element_text(hjust = 0.5, face = 'bold', size = 18),
+        legend.title = element_text(size = 16),
+        legend.text = element_text(size = 14),
+        strip.text = element_text(size = 16))
+
 # Save!
 save(clim_av, file = 'Climate/processed_climate.RData')
