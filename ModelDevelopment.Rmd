@@ -5,6 +5,7 @@ date: "2023-04-26"
 output: pdf_document
 ---
 
+Put the variability in the climate drivers as separate drivers in GJAM
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE, eval = FALSE)
 rm(list = ls())
@@ -379,9 +380,9 @@ beta ~ dmnorm(mu_beta, tau_beta)
 ```
 
 ```{r}
-maxparam <- (2 * ncol(data_sub)) + 1
+maxparam <- (2 * ntaxa) + 1
 match <- seq(from = 2, to = maxparam, by = 1)
-match <- matrix(match, nrow = 2, ncol = maxparam)
+match <- matrix(match, nrow = 2, ncol = ntaxa)
 
 data <- list(nobs = nrow(data_sub),
              ntaxa = ncol(data_sub),
@@ -400,77 +401,146 @@ out.dirch_driver_model <- coda.samples(model = jags.dirch_driver_model,
                                        n.iter = 1000)
 ```
 
-```{r}
-#plot(out.dirch_driver_model)
-#gelman.plot(out.dirch_driver_model)
-```
-
 While not converged, this is really promising given how few observations we are using right now. This is a good start, but we aren't just interested in the relationship between climate and vegetation. We're also interested in how the vegetation moderates that relationship, and how space and time factor in.
 
 ## Model 6: Incorporating species covariance
 
-The next step is adding species covariance into the model. This is accomplished by adding a random species effect $\boldsymbol{\epsilon}$ into the equation governing the relationship between fractional composition and the climate drivers:
+The next task is to add species covariance into the model. This is accomplished by modeling the $\alpha$ parameters of the Dirichlet model jointly using a multivariate normal distribution. The multivariate normal distribution was chosen because it is the only distribution that is implementable in JAGS that is appropriate for our data. Although a multivariate gamma distribution would be more appropriate, this is not available in JAGS and so was not used here. (It should be noted that there is a multivariate gamma distribution in JAGS, which is the Wishart distribution. However, the Wishart distribution describes the distribution of a matrix, not a vector, which is what we need here.)
 
-$$\boldsymbol{y}_i \sim \text{Dirichlet}(\boldsymbol{\alpha}_i)$$
+In order to build the necessary functionality into the existing model, I retraced a couple of steps to incorporate the multivariate normal distribution jointly describing $\boldsymbol{\alpha}$. First, I modeled fractional composition from a Dirichlet distribution, with priors on the concentration $\boldsymbol{\alpha}$ parameter vector at all sites combined:
 
-$$\alpha_{i,j} \sim \text{Gamma}(\alpha_{\alpha i,j},\beta_{alpha i,j})$$
+$$\boldsymbol{y}_i \sim \text{Dirichlet}(\boldsymbol{\alpha})$$
 
-$$\alpha_{\alpha i,j} = \frac{\mu_{i,j}^2}{\sigma_{i,j}^2}$$
+$$\boldsymbol{alpha} \sim \text{MVN}(\boldsymbol{\mu}, \boldsymbol{\Sigma})$$
 
-$$\beta_{\alpha i,j} = \frac{\mu_{i,j}}{\sigma_{i,j}^2}$$
-
-$$\mu_{i,j} = \text{exp}(\beta_0 + \beta_{1,j}x_{i,1} + \beta_{2,j}x_{i,2} + \epsilon_j)$$
-
-$$\sigma_{i,j}^2 = \frac{1}{\tau_{i,j}^2}$$
-
-$$\tau_{i,j} \sim \text{Gamma}(0.001, 0.001)$$
-
-$$\boldsymbol{\beta} \sim \text{MVN}(\boldsymbol{\mu}_{\beta}, \boldsymbol{\Sigma}_{\beta})$$
-
-$$\boldsymbol{\epsilon} \sim \text{MVN}(\boldsymbol{\mu}_{\epsilon}, \boldsymbol{\Sigma}_{\epsilon})$$
+where $\boldsymbol{\mu}$ is a vector of 0.5 of length $n_{\text{taxa}}$ and $\boldsymbol{\Sigma}$ is a diagonal $n_{\text{taxa}} \times n_{\text{taxa}}$ matrix with diagonal elements of 0.001 and all other elements = 0.
 
 ```{r}
-species_covar_model <- "
+mvn_model <- "
 model{
 for(i in 1:nobs){
-y[i,1:ntaxa] ~ ddirch(alpha[i,1:ntaxa])
-for(j in 1:ntaxa){
-alpha[i,j] ~ dgamma(alpha_alpha[i,j], beta_alpha[i,j])
-alpha_alpha[i,j] <- mu[i,j]^2 / sigma.sq[j]
-beta_alpha[i,j] <- mu[i,j] / sigma.sq[j]
-logit(mu[i,j]) <- beta[1] + beta[match[1,j]] * x[i,1] + beta[match[2,j]] * x[i,2] + epsilon[j]
+y[i,1:ntaxa] ~ ddirch(alpha[1:ntaxa])
 }
-}
-for(j in 1:ntaxa){
-sigma.sq[j] <- 1 / tau[j]
-tau[j] ~ dgamma(0.001, 0.001)
-}
-beta ~ dmnorm(mu_beta, sigma_beta)
-epsilon ~ dmnorm(mu_epsilon, sigma_epsilon)
+alpha[1:ntaxa] ~ dmnorm(mu, Sigma)
 }
 "
 ```
 
 ```{r}
-data <- list(nobs = nrow(data_sub),
-             ntaxa = ncol(data_sub),
+nobs <- nrow(data_sub)
+ntaxa <- ncol(data_sub)
+
+data <- list(nobs = nobs,
+             ntaxa = ntaxa,
+             mu = rep(0.5, times = ntaxa),
+             Sigma = diag(0.001,
+                          nrow = ntaxa,
+                          ncol = ntaxa))
+
+jags.mvn_model <- jags.model(file = textConnection(mvn_model),
+                             data = data,
+                             n.chains = 3)
+
+out.mvn_model <- coda.samples(model = jags.mvn_model,
+                              variable.names = 'alpha',
+                              n.iter = 1000)
+```
+
+Next, I incorporated hyperpriors on the distribution of the concentration parameters:
+
+$$\boldsymbol{y}_i \sim \text{Dirichlet}(\boldsymbol{\alpha})$$
+
+$$\boldsymbol{\alpha} \sim \text{MVN}(\boldsymbol{\mu}, \boldsymbol{\Sigma})$$
+
+$$\boldsymbol{\mu} \sim \text{MVN}(\boldsymbol{\mu}_{\mu}, \boldsymbol{\Sigma}_{\mu})$$
+
+$$\boldsymbol{\Sigma} \sim \text{Wishart}(\boldsymbol{R}, k)$$
+
+The only difference between this model and the previous is the inclusion of hyper priors on $\boldsymbol{\mu}$ and $\boldsymbol{\Sigma}$. This is necessary because the objective of modeling $\boldsymbol{\alpha}$ jointly is to estimate the covariance between the taxa, as represented by the concentration parameters. This necessitates estimating $\boldsymbol{\Sigma}$. I assumed the mean, $\boldsymbol{\mu}$ to be normally distributed using a multivariate normal distribution, while for the covariance $\boldsymbol{\Sigma}$, I used the Wishart distribution, which is often used for specifying prior distributions ofr covariance matrices. I specified vague priors for the Wishart hyperprior, with $\boldsymbol{R}$ a diagonal $n_{\text{taxa}} \times n_{\text{taxa}}$ matrix with diagonal elements = 0.001 and off-diagonal elements = 0, and $k = n_{\text{taxa}} + 2$ because for the case of a vague prior, $k$ should be $> n$.
+
+```{r}
+mvn_hyper_model <- "
+model{
+for(i in 1:nobs){
+y[i,1:ntaxa] ~ ddirch(alpha[1:ntaxa])
+}
+alpha[1:ntaxa] ~ dmnorm(mu, Sigma)
+mu ~ dmnorm(mu_mu, Sigma_mu)
+Sigma ~ dwish(R, k)
+}
+"
+```
+
+```{r}
+data <- list(nobs = nobs,
+             ntaxa = ntaxa,
              y = data_sub,
-             x = clim_sub,
+             mu_mu = rep(0.5, times = ntaxa),
+             Sigma_mu = diag(0.001,
+                             nrow = ntaxa,
+                             ncol = ntaxa),
+             R = diag(0.001,
+                      nrow = ntaxa,
+                      ncol = ntaxa),
+             k = ntaxa + 2)
+
+jags.mvn_hyper_model <- jags.model(file = textConnection(mvn_hyper_model),
+                                   data = data,
+                                   n.chains = 3, n.adapt = 2000)
+
+out.mvn_hyper_model <- coda.samples(model = jags.mvn_hyper_model,
+                                    variable.names = c('alpha', 'mu', 'Sigma'),
+                                    n.iter = 1000)
+```
+
+Finally, I incorporate the climate drivers into the model with species covariance. This is done essentially by combining the model with climate drivers and the model of species covariance, both of which are detailed above:
+
+$$\boldsymbol{y}_i \sim \text{Dirichlet}(\boldsymbol{\alpha})$$
+
+$$\boldsymbol{\alpha}_i \sim \text{MVN}(\boldsymbol{\mu}_i, \boldsymbol{\Sigma})$$
+
+$$\mu_{i,j} = exp(\beta_0 + \beta_{1,j} \times x_{i,1} + \beta_{2,j} \times \x_{i,2})$$
+
+$$\boldsymbol{\Sigma} \sim \text{Wishart}(\boldsymbol{R}, k)$$
+
+$$\boldsymbol{\beta} \sim \text{MVN}(\boldsymbol{\mu}_{\beta}, \boldsymbol{\Sigma}_{\beta})$$
+
+```{r}
+sp_clim_model <- "
+model{
+for(i in 1:nobs){
+y[i,1:ntaxa] ~ ddirch(alpha[i,1:ntaxa])
+alpha[i,1:ntaxa] ~ dmnorm(mu[i,1:ntaxa], Sigma)
+for(j in 1:ntaxa){
+logit(mu[i,j]) <- beta[1] + beta[match[1,j]] * x[i,1] + beta[match[2,j]] * x[i,2]
+}
+}
+Sigma ~ dwish(R, k)
+beta ~ dmnorm(mu_beta, Sigma_beta)
+}
+"
+```
+
+```{r}
+data <- list(nobs = nobs,
+             ntaxa = ntaxa,
+             y = data_sub,
              match = match,
+             x = clim_sub,
+             R = diag(0.001,
+                      nrow = ntaxa,
+                      ncol = ntaxa),
+             k = ntaxa + 4,
              mu_beta = rep(0, times = maxparam),
-             sigma_beta = diag(0.001,
+             Sigma_beta = diag(0.001,
                                nrow = maxparam,
-                               ncol = maxparam),
-             mu_epsilon = rep(0, times = ncol(data_sub)),
-             sigma_epsilon = diag(0.001,
-                               nrow = ncol(data_sub),
-                               ncol = ncol(data_sub)))
+                               ncol = maxparam))
 
-jags.species_covar_model <- jags.model(file = textConnection(species_covar_model),
-                                       data = data,
-                                       n.chains = 3)
+jags.sp_clim_model <- jags.model(file = textConnection(sp_clim_model),
+                                 data = data,
+                                 n.chains = 3, n.adapt = 2000)
 
-out.species_covar_model <- coda.samples(model = jags.species_covar_model, 
-                                        variable.names = c('epsilon', 'beta', 'tau'),
-                                        n.iter = 1000)
+out.sp_clim_model <- coda.samples(model = jags.sp_clim_model,
+                                  variable.names = c('beta', 'Sigma'),
+                                  n.iter = 1000)
 ```

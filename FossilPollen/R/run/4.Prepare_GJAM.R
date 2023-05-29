@@ -59,7 +59,7 @@ spat_map <- spat_pollen |>
   select(loc, match)
 
 full_data <- matrix(, nrow = nrow(full_spat_pollen),
-                    ncol = 33)
+                    ncol = 35)
 
 for(i in 1:nrow(full_spat_pollen)){
   loc <- full_spat_pollen$loc[i]
@@ -75,14 +75,17 @@ for(i in 1:nrow(full_spat_pollen)){
   temp <- climate |> filter(Loc == clim_loc) |> filter(Year == year)
   full_data[i,30] <- temp$Latitude # Lat of climate
   full_data[i,31] <- temp$Longitude # lon of climate
-  full_data[i,32] <- temp$Temperature # temperature
-  full_data[i,33] <- temp$Precipitation # precipitation
+  full_data[i,32] <- temp$Mean_Temperature # temperature
+  full_data[i,33] <- temp$Mean_Precipitation # precipitation
+  full_data[i,34] <- temp$SD_Temperature # temperature variability
+  full_data[i,35] <- temp$SD_Precipitation # precipitation variability
 }
 
 full_data <- as.data.frame(full_data)
 colnames(full_data) <- c('Match', 'Location', 'Year', colnames(full_spat_pollen)[2:13],
                          'Pollen_Longitude', 'Pollen_Latitude', colnames(full_spat_pollen)[17:28],
-                         'Climate_Latitude', 'Climate_Longitude', 'Temperature', 'Precipitation')
+                         'Climate_Latitude', 'Climate_Longitude', 'MeanTemperature', 'MeanPrecipitation',
+                         'SDTemperature', 'SDPrecipitation')
 
 full_data <- full_data |>
   mutate(Year = as.numeric(Year),
@@ -113,8 +116,10 @@ full_data <- full_data |>
          tamarack.y = as.numeric(tamarack.y),
          Climate_Latitude = as.numeric(Climate_Latitude),
          Climate_Longitude = as.numeric(Climate_Longitude),
-         Temperature = as.numeric(Temperature),
-         Precipitation = as.numeric(Precipitation))
+         MeanTemperature = as.numeric(MeanTemperature),
+         MeanPrecipitation = as.numeric(MeanPrecipitation),
+         SDTemperature = as.numeric(SDTemperature),
+         SDPrecipitation = as.numeric(SDPrecipitation))
 
 rand <- sample(1:nrow(full_data), 1)
 sub <- full_data |>
@@ -134,12 +139,13 @@ rand <- sample(1:length(unique(full_data$Location)), size = 1)
 full_data |>
   filter(Location == unique(Location)[rand]) |>
   ggplot() +
-  geom_point(aes(x = Year, y = Precipitation))
+  geom_point(aes(x = Year, y = MeanPrecipitation))
 
 cols <- colnames(full_data)
 ydata_columns <- which(grepl('.x', cols, fixed = T))
 edata_columns <- which(grepl('.y', cols, fixed = T))
-xdata_columns <- which(cols == 'Temperature' | cols == 'Precipitation')
+xdata_columns <- which(cols == 'MeanTemperature' | cols == 'MeanPrecipitation' |
+                         cols == 'SDTemperature' | cols == 'SDPrecipitation')
 
 ydata <- full_data |>
   select(all_of(ydata_columns))

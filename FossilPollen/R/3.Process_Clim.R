@@ -3,6 +3,7 @@ rm(list = ls())
 library(ncdf4)
 library(lubridate)
 library(reshape2)
+library(dplyr)
 
 # Make list of files to read in
 clim_pr_files <- list.files('Climate/Precipitation/')
@@ -64,11 +65,20 @@ test <- arr_at[[1]]
 test2 <- melt(test)
 colnames(test2) <- c('LON', 'LAT', 'TIME', 'TEMP')
 
+# Converting longitude
 test2 <- test2 |>
   mutate(LON = if_else(LON > 180, -360 + LON, LON))
 
+# Loading fossil pollen dataset
+# This will be used to match the pollen and climate
+# data in space
 load('FossilPollen/Data/full_melt_UMW.RData')
 
+# Reduce the climate data by the maximum extents
+# of the pollen data
+# This is necessary because using the entire dataset
+# was really computationally expensive
+# since we will be finding pairwise distances
 lons <- unique(full_melt$long)
 lats <- unique(full_melt$lat)
 min_lon <- min(lons) - 1
@@ -76,20 +86,28 @@ max_lon <- max(lons) + 1
 min_lat <- min(lats) - 1
 max_lat <- max(lats) + 1
 
+# Filter for  climate reconstructions only within the bounds
+# of the pollen data
 test3 <- test2 |>
   filter(LON >= min_lon & LON <= max_lon) |>
   filter(LAT >= min_lat & LAT <= max_lat)
 
+# Make vectors of all unique lats & lons
 lons <- unique(test3$LON)
 lats <- unique(test3$LAT)
 
+# Finding indexes of the climate grid that are within
+# the bounds of the pollen data
+# Will be used as indices for each of the climate files
 dim1 <- dimnames(test)[1]
 dim1 <- as.numeric(unlist(dim1))
 dim1 <- if_else(dim1 > 180, -360 + dim1, dim1)
+# Longitudes within the pollen bounds
 ind1 <- which(dim1 %in% lons)
 
 dim2 <- dimnames(test)[2]
 dim2 <- as.numeric(unlist(dim2))
+# Latitudes within the pollen bounds
 ind2 <- which(dim2 %in% lats)
 
 # Take our area of interest in the midwest
@@ -138,7 +156,6 @@ clim <- clim |>
 fc <- nc_open('FossilPollen/Data/msb-paleon-2/2Kyrs_Comp_Mean_Level2_v1.0.nc')
 fc <- ncvar_get(fc, 'Time')
 fc <- fc * 100
-bins <- fc
 
 # Make bins for +/- 25 years around each year with fractional composition
 bins <- matrix(, nrow = length(fc), ncol = 2)
@@ -156,7 +173,7 @@ colnames(pairs) <- c('Latitude', 'Longitude')
 pairs <- as.data.frame(pairs)
 
 # Storage
-clim_av <- matrix(, nrow = nrow(pairs) * nrow(bins), ncol = 5)
+clim_av <- matrix(, nrow = nrow(pairs) * nrow(bins), ncol = 7)
 
 # Counter for indexing
 ind <- 1
@@ -182,19 +199,28 @@ for(i in 1:nrow(pairs)){
     clim_av[ind,4] <- mean(time_sub$Temperature, na.rm = T)
     clim_av[ind,5] <- mean(time_sub$Precipitation, na.rm = T)
     
+    # Find variability of two climate variables
+    clim_av[ind,6] <- sd(time_sub$Temperature, na.rm = T)
+    clim_av[ind,7] <- sd(time_sub$Precipitation, na.rm = T)
+    
     # Increment counter
     ind <- ind + 1
   }
 }
+# Formatting
 clim_av <- as.data.frame(clim_av)
-colnames(clim_av) <- c('Latitude', 'Longitude', 'Year', 'Temperature', 'Precipitation')
+colnames(clim_av) <- c('Latitude', 'Longitude', 'Year',
+                       'Mean_Temperature', 'Mean_Precipitation',
+                       'SD_Temperature', 'SD_Precipitation')
 
+# Map of minnesota, wisconsin, and michigan for plotting
 states <- map_data('state') |>
   filter(region %in% c('minnesota', 'wisconsin', 'michigan'))
 
+# Plot temperature over space for first and last time periods
 clim_av |>
   filter(Year %in% c(200, 1900)) |>
-  ggplot(aes(x = Longitude, y = Latitude, color = Temperature)) +
+  ggplot(aes(x = Longitude, y = Latitude, color = Mean_Temperature)) +
   geom_polygon(data = states, aes(x = long, y = lat, group = group), color = 'black', fill = 'white') +
   geom_point(size = 4) +
   facet_wrap(~factor(Year, levels = c(1900, 200)), labeller = as_labeller(c(`200` = '200 YBP',
@@ -208,9 +234,10 @@ clim_av |>
         legend.text = element_text(size = 14),
         strip.text = element_text(size = 16))
   
+# Same for precipitation
 clim_av |>
   filter(Year %in% c(200, 1900)) |>
-  ggplot(aes(x = Longitude, y = Latitude, color = Precipitation)) +
+  ggplot(aes(x = Longitude, y = Latitude, color = Mean_Precipitation)) +
   geom_polygon(data = states, aes(x = long, y = lat, group = group), color = 'black', fill = 'white') +
   geom_point(size = 4) +
   facet_wrap(~factor(Year, levels = c(1900, 200)), labeller = as_labeller(c(`200` = '200 YBP',
@@ -219,6 +246,40 @@ clim_av |>
   ggtitle('Precipitation') +
   labs(color = 'Precipitation\n(mm/month)') +
   scale_color_viridis_c(option = 'C') +
+  theme(plot.title = element_text(hjust = 0.5, face = 'bold', size = 18),
+        legend.title = element_text(size = 16),
+        legend.text = element_text(size = 14),
+        strip.text = element_text(size = 16))
+
+# Same for temperature variability
+clim_av |>
+  filter(Year %in% c(200, 1900)) |>
+  ggplot(aes(x = Longitude, y = Latitude, color = SD_Temperature)) +
+  geom_polygon(data = states, aes(x = long, y = lat, group = group), color = 'black', fill = 'white') +
+  geom_point(size = 4) +
+  facet_wrap(~factor(Year, levels = c(1900, 200)), labeller = as_labeller(c(`200` = '200 YBP',
+                                                                             `1900` = '1900 YBP'))) +
+  theme_void() +
+  ggtitle('Temperature') +
+  labs(color = 'SD\n(°C)') +
+  scale_color_viridis_c(option = 'H') +
+  theme(plot.title = element_text(hjust = 0.5, face = 'bold', size = 18),
+        legend.title = element_text(size = 16),
+        legend.text = element_text(size = 14),
+        strip.text = element_text(size = 16))
+
+# Same for precipitation variability
+clim_av |>
+  filter(Year %in% c(200, 1900)) |>
+  ggplot(aes(x = Longitude, y = Latitude, color = SD_Precipitation)) +
+  geom_polygon(data = states, aes(x = long, y = lat, group = group), color = 'black', fill = 'white') +
+  geom_point(size = 4) +
+  facet_wrap(~factor(Year, levels = c(1900, 200)), labeller = as_labeller(c(`200` = '200 YBP',
+                                                                            `1900` = '1900 YBP'))) +
+  theme_void() +
+  ggtitle('Precipitation') +
+  labs(color = 'SD (mm/month)') +
+  scale_color_viridis_c(option = 'H') +
   theme(plot.title = element_text(hjust = 0.5, face = 'bold', size = 18),
         legend.title = element_text(size = 16),
         legend.text = element_text(size = 14),

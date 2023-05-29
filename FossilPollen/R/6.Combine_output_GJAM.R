@@ -5,6 +5,8 @@ rm(list = ls())
 library(tidyverse)
 
 files <- list.files(path = 'FossilPollen/out/')
+files <- files[grepl('sd', files, fixed = T)]
+
 nchains <- length(files)
 
 # Loop over the files to store them in one object
@@ -233,4 +235,4 @@ sgibbs |>
 #### Save
 
 save(comb_out, bFacGibbs, bgibbs, bgibbsUn,
-     fSensGibbs, sgibbs, file = 'FossilPollen/out/combined.RData')
+     fSensGibbs, sgibbs, file = 'FossilPollen/out/combined_sd.RData')

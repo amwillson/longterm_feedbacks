@@ -7,7 +7,7 @@ library(corrplot)
 library(cowplot)
 library(RColorBrewer)
 
-load('FossilPollen/out/combined.RData')
+load('FossilPollen/out/combined_sd.RData')
 
 ## Correlations between taxa and drivers
 
@@ -47,7 +47,7 @@ corr |>
          Taxon = replace(Taxon, Taxon == 'pine', 'Pine'),
          Taxon = replace(Taxon, Taxon == 'spruce', 'Spruce'),
          Taxon = replace(Taxon, Taxon == 'tamarack', 'Tamarack')) |>
-  dplyr::filter(covariate == 'Temperature') |>
+  dplyr::filter(covariate == 'SDTemperature') |>
   ggplot() +
   geom_boxplot(aes(x = reorder(Taxon, mean), ymin = lower, lower = mean - sd, middle = mean,
                    upper = mean + sd, ymax = upper, color = reorder(Taxon, -mean)), stat = 'identity') +
@@ -76,7 +76,7 @@ corr |>
          Taxon = replace(Taxon, Taxon == 'pine', 'Pine'),
          Taxon = replace(Taxon, Taxon == 'spruce', 'Spruce'),
          Taxon = replace(Taxon, Taxon == 'tamarack', 'Tamarack')) |>
-  dplyr::filter(covariate == 'Precipitation') |>
+  dplyr::filter(covariate == 'SDPrecipitation') |>
   ggplot() +
   geom_boxplot(aes(x = reorder(Taxon, mean), ymin = lower, lower = mean - sd, middle = mean,
                    upper = mean + sd, ymax = upper, color = reorder(Taxon, -mean)), stat = 'identity') +
@@ -162,11 +162,15 @@ corrplot(corr_mat, diag = T, type = 'upper', method = 'color',
 low_mat <- lower_sgibbs[ind]
 low_mat <- matrix(low_mat, nrow = 12, ncol = 12)
 low_mat <- cov2cor(low_mat)
+low_mat[low_mat < -1] <- -1
+low_mat[low_mat > 1] <- 1
 colnames(low_mat) <- rownames(low_mat) <- colnames(corr_mat)
 
 upp_mat <- upper_sgibbs[ind]
 upp_mat <- matrix(upp_mat, nrow = 12, ncol = 12)
 upp_mat <- cov2cor(upp_mat)
+upp_mat[upp_mat < -1] <- -1
+upp_mat[upp_mat > 1] <- 1
 colnames(upp_mat) <- rownames(upp_mat) <- colnames(corr_mat)
 
 corrplot(corr_mat, lowCI.mat = low_mat, uppCI.mat = upp_mat, plotCI = 'rect')
