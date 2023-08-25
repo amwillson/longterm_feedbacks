@@ -84,28 +84,23 @@ tamarack_melt <- melt(tamarack)
 colnames(tamarack_melt) <- c('y', 'x', 'time', 'tamarack')
 
 # Combine data frames
-full_melt <- ash_melt %>%
-  full_join(beech_melt, by = c('x', 'y', 'time')) %>%
-  full_join(birch_melt, by = c('x', 'y', 'time')) %>%
-  full_join(elm_melt, by = c('x', 'y', 'time')) %>%
-  full_join(hemlock_melt, by = c('x', 'y', 'time')) %>%
-  full_join(maple_melt, by = c('x', 'y', 'time')) %>%
-  full_join(oak_melt, by = c('x', 'y', 'time')) %>%
-  full_join(other_conifer_melt, by = c('x', 'y', 'time')) %>%
-  full_join(other_hardwood_melt, by = c('x', 'y', 'time')) %>%
-  full_join(pine_melt, by = c('x', 'y', 'time')) %>%
-  full_join(spruce_melt, by = c('x', 'y', 'time')) %>%
+full_melt <- ash_melt |>
+  full_join(beech_melt, by = c('x', 'y', 'time')) |>
+  full_join(birch_melt, by = c('x', 'y', 'time')) |>
+  full_join(elm_melt, by = c('x', 'y', 'time')) |>
+  full_join(hemlock_melt, by = c('x', 'y', 'time')) |>
+  full_join(maple_melt, by = c('x', 'y', 'time')) |>
+  full_join(oak_melt, by = c('x', 'y', 'time')) |>
+  full_join(other_conifer_melt, by = c('x', 'y', 'time')) |>
+  full_join(other_hardwood_melt, by = c('x', 'y', 'time')) |>
+  full_join(pine_melt, by = c('x', 'y', 'time')) |>
+  full_join(spruce_melt, by = c('x', 'y', 'time')) |>
   full_join(tamarack_melt, by = c('x', 'y', 'time'))
-
-# Format time to match climate data
-#full_melt <- full_melt %>%
-#  mutate(time = yr(time * 100, era = 'BP'),
-#         time = yr_transform(time, era = 'CE'))
 
 ## Convert coordinates to lat, long
 
 # Make a dataframe of just the coordinates
-space <- full_melt %>%
+space <- full_melt |>
   dplyr::select(x,y)
 
 space <- as.data.frame(space)
@@ -118,30 +113,27 @@ proj4string(space) <- CRS('+init=epsg:3175')
 
 # Reproject using wgs 84
 space_latlong <- spTransform(space, CRS('+init=epsg:4326'))
-# This gives the same result
-#space_latlong <- spTransform(space, CRS('+proj=longlat +datum=NAD83 +no_defs +ellps=GRS80 +towgs84=0,0,0 '))
 
 # Add lat & long to full dataframe
-full_melt <- full_melt %>%
-  dplyr::select(-c(x,y)) %>%
+full_melt <- full_melt |>
+  dplyr::select(-c(x,y)) |>
   mutate(long = space_latlong$y, lat = space_latlong$x)
 
 # Check to make sure the points match up with our expectation
-states <- map_data('state')
-states %>%
-  filter(region %in% c('illinois', 'indiana', 'michigan', 'minnesota', 'wisconsin')) %>%
+states <- map_data('state') |> filter(region %in% c('michigan', 'minnesota', 'wisconsin'))
+
+states |>
   ggplot() +
   geom_polygon(aes(x = long, y = lat, group = group), fill = 'white', color = 'black') +
   coord_map('albers', lat0 = 45.5, lat1 = 29.5) +
   geom_point(data = full_melt, aes(x = long, y = lat, color = hemlock), alpha = 0.05)
 
 # Add in time for unique time/lat/long combinations
-full_melt <- full_melt %>%
+full_melt <- full_melt |>
   mutate(loc_time = paste0(lat,'_',long,'_',time))
 
 # Remove empty grid cells
 for_removal <- c()
-
 for(i in 1:nrow(full_melt)){
   if(is.na(full_melt$ash[i]) & is.na(full_melt$beech[i]) & is.na(full_melt$birch[i]) &
      is.na(full_melt$elm[i]) & is.na(full_melt$hemlock[i]) & is.na(full_melt$maple[i]) &
@@ -155,16 +147,15 @@ full_melt_rm <- full_melt[-for_removal,]
 full_melt <- full_melt_rm
 
 # Check the final extent of the data
-states %>%
-  filter(region %in% c('illinois', 'indiana', 'michigan', 'minnesota', 'wisconsin')) %>%
+states |>
   ggplot() +
   geom_polygon(aes(x = long, y = lat, group = group), fill = 'white', color = 'black') +
-  coord_map('albers', lat0 = 45.5, lat1 = 29.5) +
   geom_point(data = full_melt, aes(x = long, y = lat, color = hemlock), alpha = 0.05)
 
 # Remove dates for longer ago than we have climate reconstructions
 full_melt <- full_melt |>
-  mutate(time = time * 100) |>
-  filter(time < 2000)
+  # convert from thousand years before 1950 to years before 1950
+  mutate(time = time * 100)
 
 save(full_melt, file = 'FossilPollen/Data/full_melt_UMW.RData')
+

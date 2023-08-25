@@ -162,4 +162,92 @@ ydata <- ydata |> rename(conifer = other_conifer,
 edata <- edata |> rename(conifer = other_conifer,
                          hardwood = other_hardwood)
 
+## Separating full data into ones for different time periods
+periods <- unique(full_data$Year)
+
+# Take periods 500 years apart
+periods <- seq(from = periods[1], to = periods[length(periods)], by = 500)
+# Add in most modern period (more rapid change = more change in vegetation-environment relationship?)
+periods <- c(periods, 1900)
+
+# Make separate dataframes for each period
+xdata_1 <- full_data |>
+  filter(Year == periods[1]) |>
+  select(all_of(xdata_columns), Year)
+ydata_1 <- full_data |>
+  filter(Year == periods[1]) |>
+  select(all_of(ydata_columns))
+edata_1 <- full_data |>
+  filter(Year == periods[1]) |>
+  select(all_of(edata_columns))
+colnames(ydata_1) <- colnames(edata_1) <- colnames(full_melt)[2:13]
+ydata_1 <- ydata_1 |> rename(conifer = other_conifer,
+                         hardwood = other_hardwood)
+edata_1 <- edata_1 |> rename(conifer = other_conifer,
+                             hardwood = other_hardwood)
+
+xdata_2 <- full_data |>
+  filter(Year == periods[2]) |>
+  select(all_of(xdata_columns), Year)
+ydata_2 <- full_data |>
+  filter(Year == periods[2]) |>
+  select(all_of(ydata_columns))
+edata_2 <- full_data |>
+  filter(Year == periods[2]) |>
+  select(all_of(edata_columns))
+colnames(ydata_2) <- colnames(edata_2) <- colnames(full_melt)[2:13]
+ydata_2 <- ydata_2 |> rename(conifer = other_conifer,
+                             hardwood = other_hardwood)
+edata_2 <- edata_2 |> rename(conifer = other_conifer,
+                             hardwood = other_hardwood)
+
+xdata_3 <- full_data |>
+  filter(Year == periods[3]) |>
+  select(all_of(xdata_columns), Year)
+ydata_3 <- full_data |>
+  filter(Year == periods[3]) |>
+  select(all_of(ydata_columns))
+edata_3 <- full_data |>
+  filter(Year == periods[3]) |>
+  select(all_of(edata_columns))
+colnames(ydata_3) <- colnames(edata_3) <- colnames(full_melt)[2:13]
+ydata_3 <- ydata_3 |> rename(conifer = other_conifer,
+                             hardwood = other_hardwood)
+edata_3 <- edata_3 |> rename(conifer = other_conifer,
+                             hardwood = other_hardwood)
+
+xdata_4 <- full_data |>
+  filter(Year == periods[4]) |>
+  select(all_of(xdata_columns), Year)
+ydata_4 <- full_data |>
+  filter(Year == periods[4]) |>
+  select(all_of(ydata_columns))
+edata_4 <- full_data |>
+  filter(Year == periods[4]) |>
+  select(all_of(edata_columns))
+colnames(ydata_4) <- colnames(edata_4) <- colnames(full_melt)[2:13]
+ydata_4 <- ydata_4 |> rename(conifer = other_conifer,
+                             hardwood = other_hardwood)
+edata_4 <- edata_4 |> rename(conifer = other_conifer,
+                             hardwood = other_hardwood)
+
+xdata_5 <- full_data |>
+  filter(Year == periods[5]) |>
+  select(all_of(xdata_columns), Year)
+ydata_5 <- full_data |>
+  filter(Year == periods[5]) |>
+  select(all_of(ydata_columns))
+edata_5 <- full_data |>
+  filter(Year == periods[5]) |>
+  select(all_of(edata_columns))
+colnames(ydata_5) <- colnames(edata_5) <- colnames(full_melt)[2:13]
+ydata_5 <- ydata_5 |> rename(conifer = other_conifer,
+                             hardwood = other_hardwood)
+edata_5 <- edata_5 |> rename(conifer = other_conifer,
+                             hardwood = other_hardwood)
+
 save(xdata, ydata, edata, file = 'FossilPollen/Data/gjam_data_allyears.RData')
+save(xdata_1, xdata_2, xdata_3, xdata_4, xdata_5,
+     ydata_1, ydata_2, ydata_3, ydata_4, ydata_5,
+     edata_1, edata_2, edata_3, edata_4, edata_5,
+     file = 'FossilPollen/Data/gjam_data_indyears.RData')

@@ -7,7 +7,7 @@ library(corrplot)
 library(cowplot)
 library(RColorBrewer)
 
-load('FossilPollen/out/combined_sd.RData')
+load('FossilPollen/out/combined_mean_var_071423.RData')
 
 ## Correlations between taxa and drivers
 
@@ -33,7 +33,7 @@ corr <- corr |>
          covariate = sub('.*_', '', beta))
 
 
-corr |>
+p1 <- corr |>
   rename(Taxon = taxon) |>
   mutate(Taxon = replace(Taxon, Taxon == 'ash', 'Ash'),
          Taxon = replace(Taxon, Taxon == 'beech', 'Beech'),
@@ -47,22 +47,101 @@ corr |>
          Taxon = replace(Taxon, Taxon == 'pine', 'Pine'),
          Taxon = replace(Taxon, Taxon == 'spruce', 'Spruce'),
          Taxon = replace(Taxon, Taxon == 'tamarack', 'Tamarack')) |>
-  dplyr::filter(covariate == 'SDTemperature') |>
+  dplyr::filter(covariate == 'Mean.Temperature') |>
   ggplot() +
   geom_boxplot(aes(x = reorder(Taxon, mean), ymin = lower, lower = mean - sd, middle = mean,
                    upper = mean + sd, ymax = upper, color = reorder(Taxon, -mean)), stat = 'identity') +
   geom_hline(aes(yintercept = 0), color = 'darkgrey', linetype = 'dashed') +
   xlab('') + ylab('Correlation') + labs(color = 'Taxon') +
-  ggtitle('Correlations between temperature and fractional composition') +
+  ggtitle('Mean Temperature') +
   theme_minimal() +
-  scale_color_viridis_d(option = 'H') +
-  theme(axis.text.x = element_blank(),
+  scale_color_manual(breaks = c('Ash', 'Beech', 'Birch', 'Elm',
+                                'Hemlock', 'Maple', 'Oak', 'Other Conifer',
+                                'Other Hardwood', 'Pine', 'Spruce', 'Tamarack'),
+                                values = c('#d1bbd7', '#ae76a3', '#882e72', '#1965b0',
+                                '#5289c7', '#7bafde', '#4eb265', '#90c987',
+                                '#cae0ab', '#f7f056', '#f6c141', '#f1932d')) +
+  theme(axis.text.x = element_text(size = 12, angle = 90, face = 'bold'),
+        plot.title = element_text(hjust = 0.5, face = 'bold', size = 18),
+        legend.text = element_text(size = 14),
+        legend.title = element_text(size = 16),
+        axis.title = element_text(size = 14))
+p1
+
+p2 <- corr |>
+  rename(Taxon = taxon) |>
+  mutate(Taxon = replace(Taxon, Taxon == 'ash', 'Ash'),
+         Taxon = replace(Taxon, Taxon == 'beech', 'Beech'),
+         Taxon = replace(Taxon, Taxon == 'birch', 'Birch'),
+         Taxon = replace(Taxon, Taxon == 'conifer', 'Other Conifer'),
+         Taxon = replace(Taxon, Taxon == 'elm', 'Elm'),
+         Taxon = replace(Taxon, Taxon == 'hardwood', 'Other Hardwood'),
+         Taxon = replace(Taxon, Taxon == 'hemlock', 'Hemlock'),
+         Taxon = replace(Taxon, Taxon == 'maple', 'Maple'),
+         Taxon = replace(Taxon, Taxon == 'oak', 'Oak'),
+         Taxon = replace(Taxon, Taxon == 'pine', 'Pine'),
+         Taxon = replace(Taxon, Taxon == 'spruce', 'Spruce'),
+         Taxon = replace(Taxon, Taxon == 'tamarack', 'Tamarack')) |>
+  dplyr::filter(covariate == 'Mean.Precipitation') |>
+  ggplot() +
+  geom_boxplot(aes(x = reorder(Taxon, mean), ymin = lower, lower = mean - sd, middle = mean,
+                   upper = mean + sd, ymax = upper, color = reorder(Taxon, -mean)), stat = 'identity') +
+  geom_hline(aes(yintercept = 0), color = 'darkgrey', linetype = 'dashed') +
+  xlab('') + ylab('Correlation') + labs(color = 'Taxon') +
+  ggtitle('Mean Precipitation') +
+  theme_minimal() +
+  scale_color_manual(breaks = c('Ash', 'Beech', 'Birch', 'Elm',
+                                'Hemlock', 'Maple', 'Oak', 'Other Conifer',
+                                'Other Hardwood', 'Pine', 'Spruce', 'Tamarack'),
+                     values = c('#d1bbd7', '#ae76a3', '#882e72', '#1965b0',
+                                '#5289c7', '#7bafde', '#4eb265', '#90c987',
+                                '#cae0ab', '#f7f056', '#f6c141', '#f1932d')) +
+  theme(axis.text.x = element_text(size = 14, angle = 90, face = 'bold'),
+        plot.title = element_text(hjust = 0.5, face = 'bold', size = 18),
+        legend.text = element_text(size = 14),
+        legend.title = element_text(size = 16),
+        axis.title = element_text(size = 16))
+p2
+
+cowplot::plot_grid(p1 + theme(legend.position = 'none'), 
+                   p2 + theme(axis.title.y = element_blank()),
+                   rel_widths = c(0.43, 0.57))
+
+p3 <- corr |>
+  rename(Taxon = taxon) |>
+  mutate(Taxon = replace(Taxon, Taxon == 'ash', 'Ash'),
+         Taxon = replace(Taxon, Taxon == 'beech', 'Beech'),
+         Taxon = replace(Taxon, Taxon == 'birch', 'Birch'),
+         Taxon = replace(Taxon, Taxon == 'conifer', 'Other Conifer'),
+         Taxon = replace(Taxon, Taxon == 'elm', 'Elm'),
+         Taxon = replace(Taxon, Taxon == 'hardwood', 'Other Hardwood'),
+         Taxon = replace(Taxon, Taxon == 'hemlock', 'Hemlock'),
+         Taxon = replace(Taxon, Taxon == 'maple', 'Maple'),
+         Taxon = replace(Taxon, Taxon == 'oak', 'Oak'),
+         Taxon = replace(Taxon, Taxon == 'pine', 'Pine'),
+         Taxon = replace(Taxon, Taxon == 'spruce', 'Spruce'),
+         Taxon = replace(Taxon, Taxon == 'tamarack', 'Tamarack')) |>
+  dplyr::filter(covariate == 'SD.Temperature') |>
+  ggplot() +
+  geom_boxplot(aes(x = reorder(Taxon, mean), ymin = lower, lower = mean - sd, middle = mean,
+                   upper = mean + sd, ymax = upper, color = reorder(Taxon, -mean)), stat = 'identity') +
+  geom_hline(aes(yintercept = 0), color = 'darkgrey', linetype = 'dashed') +
+  xlab('') + ylab('Correlation') + labs(color = 'Taxon') +
+  ggtitle('SD Temperature') +
+  theme_minimal() +
+  scale_color_manual(breaks = c('Ash', 'Beech', 'Birch', 'Elm',
+                                'Hemlock', 'Maple', 'Oak', 'Other Conifer',
+                                'Other Hardwood', 'Pine', 'Spruce', 'Tamarack'),
+                     values = c('#d1bbd7', '#ae76a3', '#882e72', '#1965b0',
+                                '#5289c7', '#7bafde', '#4eb265', '#90c987',
+                                '#cae0ab', '#f7f056', '#f6c141', '#f1932d')) +
+  theme(axis.text.x = element_text(size = 14, angle = 90, face = 'bold'),
         plot.title = element_text(hjust = 0.5, face = 'bold', size = 18),
         legend.text = element_text(size = 14),
         legend.title = element_text(size = 16),
         axis.title = element_text(size = 14))
 
-corr |>
+p4 <- corr |>
   rename(Taxon = taxon) |>
   mutate(Taxon = replace(Taxon, Taxon == 'ash', 'Ash'),
          Taxon = replace(Taxon, Taxon == 'beech', 'Beech'),
@@ -76,24 +155,32 @@ corr |>
          Taxon = replace(Taxon, Taxon == 'pine', 'Pine'),
          Taxon = replace(Taxon, Taxon == 'spruce', 'Spruce'),
          Taxon = replace(Taxon, Taxon == 'tamarack', 'Tamarack')) |>
-  dplyr::filter(covariate == 'SDPrecipitation') |>
+  dplyr::filter(covariate == 'SD.Precipitation') |>
   ggplot() +
   geom_boxplot(aes(x = reorder(Taxon, mean), ymin = lower, lower = mean - sd, middle = mean,
                    upper = mean + sd, ymax = upper, color = reorder(Taxon, -mean)), stat = 'identity') +
   geom_hline(aes(yintercept = 0), color = 'darkgrey', linetype = 'dashed') +
   xlab('') + ylab('Correlation') + labs(color = 'Taxon') +
-  ggtitle('Correlations between precipitation and fractional composition') +
+  ggtitle('SD Precipitation') +
   theme_minimal() +
-  scale_color_viridis_d(option = 'H') +
-  theme(axis.text.x = element_blank(),
+  scale_color_manual(breaks = c('Ash', 'Beech', 'Birch', 'Elm',
+                                'Hemlock', 'Maple', 'Oak', 'Other Conifer',
+                                'Other Hardwood', 'Pine', 'Spruce', 'Tamarack'),
+                     values = c('#d1bbd7', '#ae76a3', '#882e72', '#1965b0',
+                                '#5289c7', '#7bafde', '#4eb265', '#90c987',
+                                '#cae0ab', '#f7f056', '#f6c141', '#f1932d')) +
+  theme(axis.text.x = element_text(size = 14, angle = 90, face = 'bold'),
         plot.title = element_text(hjust = 0.5, face = 'bold', size = 18),
         legend.text = element_text(size = 14),
         legend.title = element_text(size = 16),
-        axis.title = element_text(size = 16))
-  
+        axis.title = element_text(size = 14))
+
+cowplot::plot_grid(p3 + theme(legend.position = 'none'), p4,
+                   rel_widths = c(0.4, 0.6))
+
 # Do some cleaning on the sensitivity (fSensGibbs)
-  fSensGibbs_sum <- fSensGibbs |>
-    select(-c(chain, iter))
+fSensGibbs_sum <- fSensGibbs |>
+  select(-c(chain, iter))
 sens_mean <- apply(fSensGibbs_sum, 2, mean, na.rm = T)  
 sens_sd <- apply(fSensGibbs_sum, 2, sd, na.rm = T)
 sens_lower <- apply(fSensGibbs_sum, 2, quantile, probs = 0.025, na.rm = T)
@@ -107,17 +194,22 @@ sens <- sens |>
   rownames_to_column(var = 'covar')
 
 sens |>
+  mutate(covar = if_else(covar == 'Mean.Temperature', 'Mean temperature', covar),
+         covar = if_else(covar == 'Mean.Precipitation', 'Mean precipitation', covar),
+         covar = if_else(covar == 'SD.Precipitation', 'SD precipitation', covar),
+         covar = if_else(covar == 'SD.Temperature', 'SD Temperature', covar)) |>
   ggplot() +
   geom_boxplot(aes(x = reorder(covar, mean),
                    ymin = lower, lower = mean - sd, middle = mean,
                    upper = mean + sd, ymax = upper, color = reorder(covar, -mean)),
-               stat = 'identity', size = 1.5) +
+               stat = 'identity', size = 1) +
   coord_flip() +
-  xlab('') + ylab(expression(paste('Sensitivity (', hat(F), ')'))) +
+  xlab('') + ylab('Sensitivity of response variables') +
   theme_minimal()  +
   theme(legend.position = 'none') +
   theme(axis.title = element_text(size = 16),
-        axis.text = element_text(size = 16))
+        axis.text.y = element_text(size = 16),
+        axis.text.x = element_text(size = 12))
 
 ## Correlations between ecosystems
 
@@ -154,9 +246,12 @@ colnames(corr_mat) <- rownames(corr_mat) <- c('Ash', 'Beech', 'Birch',
                                               'Oak', 'Other Conifer', 'Other Hardwood',
                                               'Pine', 'Spurce', 'Tamarack')
 
+# Color palette
+pal <- rev(c('#364b9a', '#4a7bb7', '#6ea6cd', '#98cae1', '#c2e4ef',
+         '#eaeccc', '#feda8b', '#fdb366', '#f67e4b', '#dd3d2d', '#a50026'))
 # Plot
-corrplot(corr_mat, diag = T, type = 'upper', method = 'color',
-         tl.col = 'black', col = brewer.pal(n = 11, name = 'PRGn'))
+corrplot(corr_mat, diag = F, type = 'upper', method = 'circle',
+         tl.col = 'black', col = pal)
 
 # With upper and lower credible intervals
 low_mat <- lower_sgibbs[ind]
@@ -173,4 +268,5 @@ upp_mat[upp_mat < -1] <- -1
 upp_mat[upp_mat > 1] <- 1
 colnames(upp_mat) <- rownames(upp_mat) <- colnames(corr_mat)
 
-corrplot(corr_mat, lowCI.mat = low_mat, uppCI.mat = upp_mat, plotCI = 'rect')
+corrplot(corr_mat, lowCI.mat = low_mat, uppCI.mat = upp_mat, plotCI = 'rect',
+         diag = F, type = 'upper', tl.col = 'black', col = pal)

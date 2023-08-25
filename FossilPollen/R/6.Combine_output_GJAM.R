@@ -5,7 +5,7 @@ rm(list = ls())
 library(tidyverse)
 
 files <- list.files(path = 'FossilPollen/out/')
-files <- files[grepl('sd', files, fixed = T)]
+files <- files[grepl('mean_var_07', files, fixed = T)]
 
 nchains <- length(files)
 
@@ -107,7 +107,7 @@ for(i in 2:nchains){
 # Remove burn in
 
 # Specify your burn  in period
-burnin <- 800
+burnin <- 200
 
 # Remove burn in
 bFacGibbs <- comb_bFacGibbs |>
@@ -138,8 +138,18 @@ bFacGibbs |>
   xlab('') + ylab('Estimate')
 
 bFacGibbs |>
-  select(c(colnames(bFacGibbs)[21:24], iter, chain)) |>
-  pivot_longer(colnames(bFacGibbs)[21:24],
+  select(c(colnames(bFacGibbs)[21:40], iter, chain)) |>
+  pivot_longer(colnames(bFacGibbs)[21:40],
+               names_to = 'beta', values_to = 'estimate') |>
+  ggplot(aes(x = iter, y = estimate, color = as.factor(chain))) +
+  geom_line() +
+  facet_wrap(~beta, scales = 'free') +
+  theme(legend.position = 'none') +
+  xlab('') + ylab('Estimate')
+
+bFacGibbs |>
+  select(c(colnames(bFacGibbs)[41:48], iter, chain)) |>
+  pivot_longer(colnames(bFacGibbs)[41:48],
                names_to = 'beta', values_to = 'estimate') |>
   ggplot(aes(x = iter, y = estimate, color = as.factor(chain))) +
   geom_line() +
@@ -158,14 +168,24 @@ bgibbs |>
   xlab('') + ylab('Estimate')
 
 bgibbs |>
-  select(c(colnames(bgibbs)[21:36], iter, chain)) |>
-  pivot_longer(colnames(bgibbs)[21:36],
+  select(c(colnames(bgibbs)[21:40], iter, chain)) |>
+  pivot_longer(colnames(bgibbs)[21:40],
                names_to = 'beta', values_to = 'estimate') |>
   ggplot(aes(x = iter, y = estimate, color = as.factor(chain))) +
   geom_line() +
   facet_wrap(~beta, scales = 'free') +
   theme(legend.position = 'none') +
-  xlab('') + ylab('Estimate ')
+  xlab('') + ylab('Estimate')
+
+bgibbs |>
+  select(c(colnames(bgibbs)[41:60], iter, chain)) |>
+  pivot_longer(colnames(bgibbs)[41:60],
+               names_to = 'beta', values_to = 'estimate') |>
+  ggplot(aes(x = iter, y = estimate, color = as.factor(chain))) +
+  geom_line() +
+  facet_wrap(~beta, scales = 'free') +
+  theme(legend.position = 'none') +
+  xlab('') + ylab('Estimate')
 
 bgibbsUn |>
   select(c(colnames(bgibbsUn)[1:20], iter, chain)) |>
@@ -178,7 +198,7 @@ bgibbsUn |>
   xlab('') + ylab('Estimate')
 
 bgibbsUn |>
-  select(c(colnames(bgibbsUn)[21:36], iter, chain)) |>
+  select(c(colnames(bgibbsUn)[21:40], iter, chain)) |>
   pivot_longer(colnames(bgibbsUn)[21:36],
                names_to = 'beta', values_to = 'estimate') |>
   ggplot(aes(x = iter, y = estimate, color = as.factor(chain))) +
@@ -187,8 +207,18 @@ bgibbsUn |>
   theme(legend.position = 'none') +
   xlab('') + ylab('Estimate')
 
+bgibbsUn |>
+  select(c(colnames(bgibbsUn)[41:60], iter, chain)) |>
+  pivot_longer(colnames(bgibbsUn)[41:60],
+               names_to = 'beta', values_to = 'estimate') |>
+  ggplot(aes(x = iter, y = estimate, color = as.factor(chain))) +
+  geom_line() +
+  facet_wrap(~beta, scales = 'free') +
+  theme(legend.position = 'none') +
+  xlab('') + ylab('Estimate')
+
 fSensGibbs |>
-  pivot_longer(colnames(fSensGibbs)[1:2],
+  pivot_longer(colnames(fSensGibbs)[1:4],
                names_to = 'beta', values_to = 'estimate') |>
   ggplot(aes(x = iter, y = estimate, color = as.factor(chain))) +
   geom_line() +
@@ -235,4 +265,4 @@ sgibbs |>
 #### Save
 
 save(comb_out, bFacGibbs, bgibbs, bgibbsUn,
-     fSensGibbs, sgibbs, file = 'FossilPollen/out/combined_sd.RData')
+     fSensGibbs, sgibbs, file = 'FossilPollen/out/combined_mean_var_071423.RData')
