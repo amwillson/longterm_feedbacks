@@ -51,9 +51,9 @@ full_format |>
   ggplot(aes(x = time, y = fc, fill = taxon)) +
   geom_bar(position = 'stack', stat = 'identity') +
   scale_x_reverse() +
-  ggtitle('Fractional composition in one 8 x 8 km grid cell') +
+  ggtitle('Relative community composition in one grid cell') +
   xlab('Time (years before present)') +
-  ylab('Fractional Composition') +
+  ylab('Relative Composition') +
   scale_fill_manual(breaks = c('Ash', 'Beech', 'Birch', 'Elm',
                                'Hemlock', 'Maple', 'Oak', 'Other Conifer',
                                'Other Hardwood', 'Pine', 'Spruce', 'Tamarack'),

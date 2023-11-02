@@ -2,9 +2,7 @@
 
 # Easy
 ## 1. See if we can run GJAM over time in a predictive framework
-## 2. Decide how to include time without autocorrelation in GJAM
 ## 3. Test GJAM time
-## 4. Make example presentation of preliminary results from tree rings
 
 # Medium
 ## 5. Check how data were derived for the tree ring part
